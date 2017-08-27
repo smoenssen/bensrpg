@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="9" height="10" tilewidth="16" tileheight="16" nextobjectid="39">
+ <tileset firstgid="1" name="Carpet" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="Game/Tiles/Inside/Carpet/Carpet.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="2" name="Border" tilewidth="16" tileheight="16" tilecount="2" columns="1">
+  <image source="Game/Tiles/Inside/Border.png" width="16" height="32"/>
+ </tileset>
+ <tileset firstgid="4" name="Wood_Floor" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="Game/Tiles/Inside/Wood_Floor/Wood_Floor.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="5" name="Counter_Armory" tilewidth="16" tileheight="16" tilecount="5" columns="5">
+  <image source="Game/Tiles/Inside/Counter/Armory/Counter_Armory.png" width="80" height="16"/>
+ </tileset>
+ <tileset firstgid="10" name="Wood_Wall" tilewidth="16" tileheight="16" tilecount="4" columns="2">
+  <image source="Game/Tiles/Inside/Wood_Wall/Wood_Wall.png" width="32" height="32"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="9" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,
+0,4,4,4,4,4,4,4,0,
+0,4,4,4,4,4,4,4,0,
+0,4,4,4,4,4,4,4,0,
+0,4,4,4,4,4,4,4,0,
+0,4,4,4,4,4,4,4,0,
+0,4,4,4,4,4,4,4,0,
+0,4,4,4,4,4,4,4,0,
+0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Higher" width="9" height="10">
+  <data encoding="csv">
+2,10,11,10,11,10,11,10,3221225474,
+2,12,13,12,13,12,13,12,3221225474,
+2,0,0,0,0,0,0,0,3221225474,
+2,0,5,6,7,8,9,0,3221225474,
+2,0,0,0,0,0,0,0,3221225474,
+2,0,0,0,0,0,0,0,3221225474,
+2,0,0,0,0,0,0,0,3221225474,
+2,0,0,0,0,0,0,0,3221225474,
+2,0,0,0,1,0,0,0,3221225474,
+1610612739,1610612738,1610612738,1610612738,1610612738,1610612738,1610612738,1610612738,3221225475
+</data>
+ </layer>
+ <objectgroup name="Door">
+  <object id="34" x="64.125" y="144.125" width="15.5" height="1.125"/>
+ </objectgroup>
+ <objectgroup name="Counter">
+  <object id="38" x="32.7273" y="47.0909" width="78.7273" height="8.90909"/>
+ </objectgroup>
+ <objectgroup name="Bounds">
+  <object id="22" x="15.75" y="0.75" width="112.75" height="24"/>
+  <object id="27" x="13" y="0.75" width="1.5" height="146.25"/>
+  <object id="28" x="130.25" y="0.5" width="1.25" height="146.25"/>
+  <object id="33" x="14.1818" y="144.545" width="116.182" height="1.27273"/>
+ </objectgroup>
+</map>
