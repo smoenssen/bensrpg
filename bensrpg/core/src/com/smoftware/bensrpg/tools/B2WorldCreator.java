@@ -1,7 +1,6 @@
 package com.smoftware.bensrpg.tools;
 
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -33,19 +32,15 @@ public class B2WorldCreator {
         this.player = game.player;
 
         //create bodies/fixtures
-        for(MapObject object : map.getLayers().get(BensRPG.GENERIC_OBJECT_LAYER).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Generic Objects").getObjects().getByType(RectangleMapObject.class)){
             new GenericObject(game, screen, player, object);
         }
 
-        for(MapObject object : map.getLayers().get(BensRPG.GENERIC_OBJECT_LAYER).getObjects().getByType(PolygonMapObject.class)){
-            new GenericObject(game, screen, player, object);
-        }
-
-        for(MapObject object : map.getLayers().get(BensRPG.BOUNDS_PLAYSCREEN_LAYER).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Bounds").getObjects().getByType(RectangleMapObject.class)){
             new BoundsObject(game, screen, player, object);
         }
 
-        for(MapObject object : map.getLayers().get(BensRPG.ARMORY_DOOR_LAYER).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Armory Door").getObjects().getByType(RectangleMapObject.class)){
             new ArmoryDoor(game, screen, player, object);
         }
 /*
@@ -81,15 +76,15 @@ public class B2WorldCreator {
         Body body;
 
         //create bodies/fixtures
-        for(MapObject object : map.getLayers().get(BensRPG.ARMORY_COUNTER_LAYER).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Counter").getObjects().getByType(RectangleMapObject.class)){
             new GenericObject(game, screen, player, object);
         }
 
-        for(MapObject object : map.getLayers().get(BensRPG.BOUNDS_ARMORYSCREEN_LAYER).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Bounds").getObjects().getByType(RectangleMapObject.class)){
             new BoundsObject(game, screen, player, object);
         }
 
-        for(MapObject object : map.getLayers().get(BensRPG.ARMORY_EXIT_DOOR_LAYER).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Exit Door").getObjects().getByType(RectangleMapObject.class)){
             new ArmoryDoorExit(game, screen, player, object);
         }
     }

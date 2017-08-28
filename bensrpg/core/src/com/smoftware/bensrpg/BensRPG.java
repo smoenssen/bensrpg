@@ -34,18 +34,6 @@ public class BensRPG extends Game {
 	public static final short MARIO_HEAD_BIT = 512;
 	public static final short FIREBALL_BIT = 1024;
 
-	//Tiled layers
-	//PlayScreen
-	public static final short GRAPHICS_LAYER = 0;
-	public static final short GENERIC_OBJECT_LAYER = 1;
-	public static final short ARMORY_DOOR_LAYER = 2;
-	public static final short BOUNDS_PLAYSCREEN_LAYER = 3;
-
-	//ArmoryScreen
-	public static final short ARMORY_EXIT_DOOR_LAYER = 2;
-	public static final short ARMORY_COUNTER_LAYER = 3;
-	public static final short BOUNDS_ARMORYSCREEN_LAYER = 4;
-
 	public Hero player;
 	public SpriteBatch batch;
 	private Stack screenStack;
@@ -83,7 +71,7 @@ public class BensRPG extends Game {
 
 	public void setPreviousScreen() {
 		// NOTE: Current screen is always on top of stack
-		Gdx.app.log("tag", String.format("setPreviousScreen begin stack size = %d", screenStack.size()));
+		//Gdx.app.log("tag", String.format("setPreviousScreen begin stack size = %d", screenStack.size()));
 		if (screenStack.size() > 1) {
 			//clean up current screen
 			Screen screen = (Screen)screenStack.pop();
@@ -93,14 +81,14 @@ public class BensRPG extends Game {
 			screen = (Screen)screenStack.peek();
 			setScreen(screen);
 		}
-		Gdx.app.log("tag", String.format("setPreviousScreen end stack size = %d", screenStack.size()));
+		//Gdx.app.log("tag", String.format("setPreviousScreen end stack size = %d", screenStack.size()));
 	}
 
 	public void setCurrentScreen(Screen screen) {
-		Gdx.app.log("tag", String.format("setCurrentScreen begin stack size = %d", screenStack.size()));
+		//Gdx.app.log("tag", String.format("setCurrentScreen begin stack size = %d", screenStack.size()));
 		screenStack.push(screen);
 		setScreen(screen);
-		Gdx.app.log("tag", String.format("setPreviousScreen end stack size = %d", screenStack.size()));
+		//Gdx.app.log("tag", String.format("setCurrentScreen end stack size = %d", screenStack.size()));
 	}
 
 	@Override

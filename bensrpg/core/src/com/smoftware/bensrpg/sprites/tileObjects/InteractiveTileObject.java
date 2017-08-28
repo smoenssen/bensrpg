@@ -50,6 +50,7 @@ public abstract class InteractiveTileObject {
 
         shape.setAsBox(bounds.getWidth() / 2 / BensRPG.PPM, bounds.getHeight() / 2 / BensRPG.PPM);
         fdef.shape = shape;
+        fdef.restitution = 0.0f;
         fixture = body.createFixture(fdef);
 
     }
@@ -83,8 +84,8 @@ public abstract class InteractiveTileObject {
         fixture.setFilterData(filter);
     }
 
-    public TiledMapTileLayer.Cell getCell(){
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(BensRPG.GRAPHICS_LAYER);
+    public TiledMapTileLayer.Cell getCell(String layerName){
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName);
 
         //srm - need to scale up and then divide by tile size
         return layer.getCell((int)(body.getPosition().x * BensRPG.PPM / 16),
