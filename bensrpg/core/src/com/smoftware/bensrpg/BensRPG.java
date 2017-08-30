@@ -3,9 +3,7 @@ package com.smoftware.bensrpg;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,9 +24,9 @@ public class BensRPG extends Game {
 
 	//public static final int V_WIDTH = 480;
 	//public static final int V_HEIGHT = 320;
-	public static final int V_WIDTH = 240;
-	public static final int V_HEIGHT = 160;
-	public static final float ASPECT_RATIO = (float)V_WIDTH/(float)V_HEIGHT;
+	public static int V_WIDTH = 260;
+	public static int V_HEIGHT = 160;
+	public static float ASPECT_RATIO = (float)V_WIDTH/(float)V_HEIGHT;
 	public static final float PPM = 100;	// pixels per meter
 
 	//Box2D Collision Bits
@@ -69,6 +67,9 @@ public class BensRPG extends Game {
 		batch = new SpriteBatch();
 		screenStack = new Stack();
 
+		ASPECT_RATIO = Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+		V_HEIGHT = (int)((float)V_WIDTH / ASPECT_RATIO);
+
 		//Create camera
 		float aspectRatio = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
 		camera = new OrthographicCamera();
@@ -85,8 +86,8 @@ public class BensRPG extends Game {
 		//Create Drawable's from TouchPad skin
 		touchBackground = touchpadSkin.getDrawable("touchBackground");
 		touchKnob = touchpadSkin.getDrawable("touchKnob");
-		touchKnob.setMinWidth(10);
-		touchKnob.setMinHeight(10);
+		touchKnob.setMinWidth(16);
+		touchKnob.setMinHeight(16);
 
 		//Apply the Drawables to the TouchPad Style
 		touchpadStyle.background = touchBackground;
@@ -95,7 +96,7 @@ public class BensRPG extends Game {
         //srm - first param has to do with sensitivity
 		touchpad = new Touchpad(3, touchpadStyle);
 		//setBounds(x,y,width,height)
-		touchpad.setBounds(0, 0, 50, 50);
+		touchpad.setBounds(5, 5, 60, 60);
 
 		//Create a Stage and add TouchPad
 		Viewport viewport = new FitViewport(BensRPG.V_WIDTH, BensRPG.V_HEIGHT, new OrthographicCamera());

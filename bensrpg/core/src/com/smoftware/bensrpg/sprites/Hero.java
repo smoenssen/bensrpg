@@ -369,9 +369,9 @@ public class Hero extends Sprite implements InputProcessor{
     public State getState(){
         Gdx.app.log("tag", String.format("x = %3.2f, y = %3.2f", b2body.getLinearVelocity().x, b2body.getLinearVelocity().y));
 
-        if (b2body.getLinearVelocity().y > 0)
+        if (b2body.getLinearVelocity().y > 0.6f)
             return State.WALKING_UP;
-        else if (b2body.getLinearVelocity().y < 0)
+        else if (b2body.getLinearVelocity().y < -0.6f)
             return State.WALKING_DOWN;
         else if (b2body.getLinearVelocity().x > 0)
             return State.WALKING_RIGHT;
