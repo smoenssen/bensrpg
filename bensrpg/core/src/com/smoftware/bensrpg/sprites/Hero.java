@@ -330,7 +330,7 @@ public class Hero extends Sprite implements InputProcessor{
         //get marios current state. ie. jumping, running, standing...
         currentState = getState();
 
-        Gdx.app.log("tag", String.format("currentState = %s", currentState.toString()));
+        //Gdx.app.log("tag", String.format("currentState = %s", currentState.toString()));
 
         TextureRegion region;
 
@@ -367,7 +367,7 @@ public class Hero extends Sprite implements InputProcessor{
     }
 
     public State getState(){
-        Gdx.app.log("tag", String.format("x = %3.2f, y = %3.2f", b2body.getLinearVelocity().x, b2body.getLinearVelocity().y));
+        //Gdx.app.log("tag", String.format("x = %3.2f, y = %3.2f", b2body.getLinearVelocity().x, b2body.getLinearVelocity().y));
 
         if (b2body.getLinearVelocity().y > 0.6f)
             return State.WALKING_UP;

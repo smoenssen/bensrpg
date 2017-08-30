@@ -76,14 +76,16 @@ public class ArmoryScreen extends AbstractScreen {
         gamecam = new OrthographicCamera();
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
-        //since map is smaller than virtual screen, just set the game viewport to the size of the map at 100% zoom
-        gamePort = new FitViewport(mapPixelWidth / BensRPG.PPM, mapPixelHeight / BensRPG.PPM, gamecam);
+        gamePort = new FitViewport(BensRPG.V_WIDTH / BensRPG.PPM, BensRPG.V_HEIGHT / BensRPG.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
         hud = new Hud(game.batch);
 
-        //initially set our gamcam to be centered correctly at the start of of map
-        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        //initially set our gamcam to be centered correctly at the bottom center of map
+        float viewportCenter = gamePort.getWorldWidth() / 2;
+        float rhEdgeOfMap =  mapPixelWidth/BensRPG.PPM;
+        float mapCenter = rhEdgeOfMap / 2;
+        gamecam.position.set((viewportCenter - mapCenter) - (viewportCenter - rhEdgeOfMap), gamePort.getWorldHeight() / 2f, 0);
 
         //create our Box2D world, setting no gravity in X or Y, and allow bodies to sleep
         world = new World(new Vector2(0, 0), true);
@@ -94,9 +96,6 @@ public class ArmoryScreen extends AbstractScreen {
         //create hero in our game world
         creator = new B2WorldCreator(game, this);
         game.player.setScreen(this);
-
-        // Make the hero (instance) the class that handles the inputs
-        Gdx.input.setInputProcessor(player);
 
         world.setContactListener(new WorldContactListener());
     }
@@ -127,9 +126,7 @@ public class ArmoryScreen extends AbstractScreen {
         //keep camera within map
         //http://wiki.v5ent.com/doku.php?id=libgdx:libgdx:wiki:orthographic-camera
         gamecam.zoom = MathUtils.clamp(gamecam.zoom, 0.1f, 100/gamecam.viewportWidth);
-        //float effectiveViewportWidth = gamecam.viewportWidth * gamecam.zoom;
         float effectiveViewportHeight = gamecam.viewportHeight * gamecam.zoom;
-        //gamecam.position.x = MathUtils.clamp(gamecam.position.x, effectiveViewportWidth / 2f, ((float)mapPixelWidth / BensRPG.PPM) - (effectiveViewportWidth / 2f));
         gamecam.position.y = MathUtils.clamp(gamecam.position.y, effectiveViewportHeight / 2f, ((float)mapPixelHeight / BensRPG.PPM) - (effectiveViewportHeight / 2f));
 
         //update our gamecam with correct coordinates after changes

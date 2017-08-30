@@ -35,10 +35,6 @@ public class GenericObject extends InteractiveTileObject {
 
     @Override
     public void onCollision(Hero hero) {
-        // open Armory map
-        Gdx.app.log("tag", "onCollision generic object!");
 
-        //to prevent deflection
-        //player.b2body.setLinearVelocity(0, 0);
     }
 }

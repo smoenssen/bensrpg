@@ -35,6 +35,6 @@ public class BoundsObject extends InteractiveTileObject {
 
     @Override
     public void onCollision(Hero hero) {
-        Gdx.app.log("tag", "onCollision Bounds!");
+
     }
 }

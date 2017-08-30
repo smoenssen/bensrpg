@@ -5,14 +5,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.smoftware.bensrpg.controllers.ActionButtons;
+import com.smoftware.bensrpg.controllers.FloatingThumbpadController;
 import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 
@@ -22,8 +20,6 @@ public class BensRPG extends Game {
 
 	public static final boolean bDebug = true;
 
-	//public static final int V_WIDTH = 480;
-	//public static final int V_HEIGHT = 320;
 	public static int V_WIDTH = 260;
 	public static int V_HEIGHT = 160;
 	public static float ASPECT_RATIO = (float)V_WIDTH/(float)V_HEIGHT;
@@ -48,13 +44,10 @@ public class BensRPG extends Game {
 	private Stack screenStack;
 
 	private OrthographicCamera camera;
+	private Viewport viewport;
 	private Stage stage;
-	private Touchpad touchpad;
-	private Touchpad.TouchpadStyle touchpadStyle;
-	private Skin touchpadSkin;
-	private Drawable touchBackground;
-	private Drawable touchKnob;
-	private float blockSpeed;
+	private FloatingThumbpadController touchpad;
+	private ActionButtons actionButtons;
 
 	/* WARNING Using AssetManager in a static way can cause issues, especially on Android.
 	Instead you may want to pass around Assetmanager to those the classes that need it.
@@ -67,47 +60,27 @@ public class BensRPG extends Game {
 		batch = new SpriteBatch();
 		screenStack = new Stack();
 
-		ASPECT_RATIO = Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+		// set width and height to fill screen
+		ASPECT_RATIO = (float)Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
 		V_HEIGHT = (int)((float)V_WIDTH / ASPECT_RATIO);
 
 		//Create camera
-		float aspectRatio = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 10f*aspectRatio, 10f);
+		camera.setToOrtho(false, 10f*ASPECT_RATIO, 10f);
 
-		//Create a touchpad skin
-		touchpadSkin = new Skin();
-		//Set background image
-		touchpadSkin.add("touchBackground", new Texture("touchBackground.png"));
-		//Set knob image
-		touchpadSkin.add("touchKnob", new Texture("touchKnob.png"));
-		//Create TouchPad Style
-		touchpadStyle = new Touchpad.TouchpadStyle();
-		//Create Drawable's from TouchPad skin
-		touchBackground = touchpadSkin.getDrawable("touchBackground");
-		touchKnob = touchpadSkin.getDrawable("touchKnob");
-		touchKnob.setMinWidth(16);
-		touchKnob.setMinHeight(16);
-
-		//Apply the Drawables to the TouchPad Style
-		touchpadStyle.background = touchBackground;
-		touchpadStyle.knob = touchKnob;
-		//Create new TouchPad with the created style
-        //srm - first param has to do with sensitivity
-		touchpad = new Touchpad(3, touchpadStyle);
-		//setBounds(x,y,width,height)
-		touchpad.setBounds(5, 5, 60, 60);
-
-		//Create a Stage and add TouchPad
-		Viewport viewport = new FitViewport(BensRPG.V_WIDTH, BensRPG.V_HEIGHT, new OrthographicCamera());
+		//Create a Stage and controllers
+		actionButtons = new ActionButtons(this);
+		touchpad = new FloatingThumbpadController();
+		viewport = new FitViewport(BensRPG.V_WIDTH, BensRPG.V_HEIGHT, new OrthographicCamera());
 		stage = new Stage(viewport, batch);
-		stage.addActor(touchpad);
-		Gdx.input.setInputProcessor(stage);
+		stage.addActor(touchpad.getTouchpad());
+		stage.addActor(actionButtons.buttonTable);
+		actionButtons.setStage(stage);
 
-		blockSpeed = 5;
-
-		// Make the hero (instance) the class that handles the inputs
-		//Gdx.input.setInputProcessor(player);
+		if (Gdx.app.getType() == Application.ApplicationType.Android)
+			Gdx.input.setInputProcessor(stage);
+		else
+			Gdx.input.setInputProcessor(player);
 /*
 		manager = new AssetManager();
 		manager.load("audio/music/mario_music.ogg", Music.class);
@@ -151,28 +124,41 @@ public class BensRPG extends Game {
 	}
 
 	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		viewport.update(width, height);
+		actionButtons.resize(width, height);
+	}
+
+	public void update(float dt){
+		handleInput();
+	}
+
+	public void handleInput(){
+		if(actionButtons.isRightPressed())
+			Gdx.app.log("tag", "right pressed");
+		else if (actionButtons.isLeftPressed())
+			Gdx.app.log("tag", "left pressed");
+	}
+
+	@Override
 	public void render () {
-
 		super.render();
-
-		//Gdx.gl.glClearColor(0.294f, 0.294f, 0.294f, 1f);
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		update(Gdx.graphics.getDeltaTime());
 		camera.update();
 
-		//Move player with TouchPad
-		player.b2body.setLinearVelocity(touchpad.getKnobPercentX(), touchpad.getKnobPercentY());
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			//Move player with Touchpad - velocity is directly proportionate to the knob position
+			player.b2body.setLinearVelocity(touchpad.getDirection());
+		}
 
-		//player.setX(player.getX() + touchpad.getKnobPercentX()*blockSpeed);
-		//player.setY(player.getY() + touchpad.getKnobPercentY()*blockSpeed);
-
-		//Draw
 		batch.begin();
 		player.draw(batch);
 		batch.end();
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 	}
-	
+
 	@Override
 	public void dispose () {
 		super.dispose();

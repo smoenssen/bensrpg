@@ -26,8 +26,6 @@ public class ArmoryDoorExit  extends InteractiveTileObject {
 
     @Override
     public void onCollision(Hero hero) {
-        Gdx.app.log("tag", "onCollision ArmoryDoorExit!");
-
         // go back to previous screen
         game.setPreviousScreen();
     }

@@ -27,10 +27,7 @@ public class ArmoryDoor extends InteractiveTileObject {
     @Override
     public void onCollision(Hero hero) {
         // open Armory map
-        Gdx.app.log("tag", "onCollision ArmoryDoor!");
-
         game.setCurrentScreen(new ArmoryScreen(game));
         //MarioBros.manager.get("audio/sounds/bump.wav", Sound.class).play();
     }
-
 }
