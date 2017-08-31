@@ -21,9 +21,9 @@ public class FixedThumbpadController {
         //Create a touchpad skin
         touchpadSkin = new Skin();
         //Set background image
-        touchpadSkin.add("touchBackground", new Texture("touchpadBackground.png"));
+        touchpadSkin.add("touchBackground", new Texture("controllers/touchpadBackground.png"));
         //Set knob image
-        touchpadSkin.add("touchKnob", new Texture("touchpadKnob.png"));
+        touchpadSkin.add("touchKnob", new Texture("controllers/touchpadKnob.png"));
         //Create TouchPad Style
         touchpadStyle = new Touchpad.TouchpadStyle();
         //Create Drawable's from TouchPad skin

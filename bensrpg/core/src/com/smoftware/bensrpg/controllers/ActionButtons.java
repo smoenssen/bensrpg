@@ -32,9 +32,7 @@ public class ActionButtons {
 
         //Gdx.input.setInputProcessor(stage);
 
-        buttonTable.left().bottom();
-
-        Image rightImg = new Image(new Texture("touchpadKnob.png"));
+        Image rightImg = new Image(new Texture("controllers/touchpadKnob.png"));
         rightImg.setSize(25, 25);
         rightImg.addListener(new InputListener() {
 
@@ -50,7 +48,7 @@ public class ActionButtons {
             }
         });
 
-        Image leftImg = new Image(new Texture("touchpadKnob.png"));
+        Image leftImg = new Image(new Texture("controllers/touchpadKnob.png"));
         leftImg.setSize(25, 25);
         leftImg.addListener(new InputListener() {
 
@@ -66,10 +64,17 @@ public class ActionButtons {
             }
         });
 
+        //int xPad = 8;
+        // top, left, bottom, right
         buttonTable.row().pad(0, 8, 8, 2);
         buttonTable.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight());
         buttonTable.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight());
 
+        buttonTable.left().bottom();
+
+        buttonTable.pack();
+        Gdx.app.log("tag", String.format("table width = %3.2f", buttonTable.getWidth()));
+        buttonTable.setX(BensRPG.V_WIDTH - buttonTable.getWidth() - 10);
     }
 
     public void setStage(Stage stage) {

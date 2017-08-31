@@ -56,7 +56,7 @@ public class PlayScreen extends AbstractScreen {
 
     public PlayScreen(BensRPG game){
         //srm - might want to change this to use libgdx asset manager
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
+        //atlas = new TextureAtlas("Mario_and_Enemies.pack");
         this.game = game;
 
         //create cam used to follow mario through cam world
