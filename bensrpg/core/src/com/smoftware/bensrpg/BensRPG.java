@@ -31,10 +31,10 @@ public class BensRPG extends Game {
 	public static final short ARMORY_DOOR_BIT = 2;
 	public static final short ARMORY_EXIT_DOOR_BIT = 4;
 	public static final short GENERIC_OBJECT_BIT = 8;
-	public static final short DESTROYED_BIT = 16;
+	public static final short OBSTACLE_BIT = 16;
 	public static final short BOUNDS_OBJECT_BIT = 32;
-	public static final short ENEMY_BIT = 64;
-	public static final short ENEMY_HEAD_BIT = 128;
+	public static final short MAP1_BIT = 64;
+	public static final short MAP2_BIT = 128;
 	public static final short ITEM_BIT = 256;
 	public static final short MARIO_HEAD_BIT = 512;
 	public static final short FIREBALL_BIT = 1024;

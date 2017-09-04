@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
 import com.smoftware.bensrpg.screens.Map1Screen;
+import com.smoftware.bensrpg.screens.Map2Screen;
 import com.smoftware.bensrpg.screens.PlayScreen;
 
 /**
@@ -48,6 +49,7 @@ public class Hero extends Sprite implements InputProcessor{
     private Screen currentScreen;
     private PlayScreen screenPlay;
     private Map1Screen screenMap1;
+    private Map2Screen screenMap2;
     private ArmoryScreen screenArmory;
 
     private float lastPositionX;
@@ -149,6 +151,28 @@ public class Hero extends Sprite implements InputProcessor{
 
         //define hero in Box2d, at last known position
         defineHero(lastPositionX / BensRPG.PPM, lastPositionY / BensRPG.PPM);
+    }
+
+    public void setScreen(Map2Screen screen) {
+        if (currentScreen instanceof Map1Screen) {
+            currentScreen = (Screen) screen;
+            screenMap2 = screen;
+            world = screen.getWorld();
+
+            lastPositionY = ((getY() + getHeight() / 2)) * BensRPG.PPM;
+
+            // need to make sure player doesn't spawn back onto the obstacle that got him here
+            lastPositionX = getX() * BensRPG.PPM;
+            lastPositionX -= (getWidth() * 2);
+
+            Gdx.app.log("tag", String.format("lastPositionX = %3.2f, lastPositionY = %3.2f", lastPositionX, lastPositionY));
+
+            //define hero in Box2d, at beginning of map
+            //srm todo: figure out offset into next screen based on last Y position
+            //y position in center of map1 exit = 896
+            float offset = 896 - lastPositionY + (getHeight() * 2);
+            defineHero(16 / BensRPG.PPM, (232 - offset)/ BensRPG.PPM);
+        }
     }
 
     public void setScreen(ArmoryScreen screen) {
@@ -449,7 +473,10 @@ public class Hero extends Sprite implements InputProcessor{
         fdef.filter.maskBits = BensRPG.GENERIC_OBJECT_BIT |
                                BensRPG.BOUNDS_OBJECT_BIT |
                                BensRPG.ARMORY_DOOR_BIT |
-                               BensRPG.ARMORY_EXIT_DOOR_BIT;
+                               BensRPG.ARMORY_EXIT_DOOR_BIT |
+                               BensRPG.OBSTACLE_BIT |
+                               BensRPG.MAP1_BIT |
+                               BensRPG.MAP2_BIT;
 
         fdef.shape = shape;
         fdef.restitution = 0.0f;

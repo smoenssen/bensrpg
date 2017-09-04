@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
 import com.smoftware.bensrpg.screens.Map1Screen;
+import com.smoftware.bensrpg.screens.Map2Screen;
 import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 
@@ -28,11 +29,56 @@ public abstract class AbstractCollisionTileObject {
     protected Rectangle bounds;
     protected Body body;
     protected PlayScreen screenPlay;
-    protected Map1Screen map1;
+    protected Map1Screen screenMap1;
+    protected Map2Screen screenMap2;
     protected ArmoryScreen screenArmory;
     protected MapObject object;
 
     protected Fixture fixture;
+
+    public AbstractCollisionTileObject(Map1Screen screen, MapObject object){
+        this.object = object;
+        this.screenMap1 = screen;
+        this.world = screen.getWorld();
+        this.map = screen.getMap();
+        this.bounds = ((RectangleMapObject) object).getRectangle();
+
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+
+        bdef.type = BodyDef.BodyType.StaticBody;
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / BensRPG.PPM, (bounds.getY() + bounds.getHeight() / 2) / BensRPG.PPM);
+
+        body = world.createBody(bdef);
+
+        shape.setAsBox(bounds.getWidth() / 2 / BensRPG.PPM, bounds.getHeight() / 2 / BensRPG.PPM);
+        fdef.shape = shape;
+        fdef.restitution = 0.0f;
+        fixture = body.createFixture(fdef);
+    }
+
+    public AbstractCollisionTileObject(Map2Screen screen, MapObject object){
+        this.object = object;
+        this.screenMap2 = screen;
+        this.world = screen.getWorld();
+        this.map = screen.getMap();
+        this.bounds = ((RectangleMapObject) object).getRectangle();
+
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+
+        bdef.type = BodyDef.BodyType.StaticBody;
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / BensRPG.PPM, (bounds.getY() + bounds.getHeight() / 2) / BensRPG.PPM);
+
+        body = world.createBody(bdef);
+
+        shape.setAsBox(bounds.getWidth() / 2 / BensRPG.PPM, bounds.getHeight() / 2 / BensRPG.PPM);
+        fdef.shape = shape;
+        fdef.restitution = 0.0f;
+        fixture = body.createFixture(fdef);
+    }
 
     public AbstractCollisionTileObject(PlayScreen screen, MapObject object){
         this.object = object;
@@ -80,6 +126,7 @@ public abstract class AbstractCollisionTileObject {
     }
 
     public abstract void onCollision(Hero mario);
+
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
@@ -95,4 +142,5 @@ public abstract class AbstractCollisionTileObject {
     }
 
     public Rectangle getBounds() { return bounds; };
+
 }

@@ -73,7 +73,8 @@ public class SignPost extends AbstractInteractiveTileObject{
         float signWidth = Gdx.graphics.getWidth()- (padding * 2);
         float signHeight = 95;
         textArea.setX(padding);
-        textArea.setY(Gdx.graphics.getHeight() - padding - signHeight);
+        //srm top of screen: textArea.setY(Gdx.graphics.getHeight() - padding - signHeight);
+        textArea.setY(padding);
         textArea.setWidth(signWidth);
         textArea.setHeight(signHeight);
         textArea.setAlignment(Align.center);
@@ -133,7 +134,7 @@ public class SignPost extends AbstractInteractiveTileObject{
 
     public void draw() {
         //stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        //stage.draw();
+        stage.draw();
 
     }
 
@@ -143,5 +144,9 @@ public class SignPost extends AbstractInteractiveTileObject{
     @Override
     public void Interact(Rectangle playerPosition) {
         Gdx.app.log("tag", "Interacting!!!");
+
+        if (playerPosition.overlaps(getBounds())) {
+            Gdx.app.log("tag", "player overlapped signpost!!!");
+        }
     }
 }

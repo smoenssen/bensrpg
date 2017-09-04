@@ -3,20 +3,20 @@ package com.smoftware.bensrpg.tools;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
 import com.smoftware.bensrpg.screens.Map1Screen;
+import com.smoftware.bensrpg.screens.Map2Screen;
 import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 import com.smoftware.bensrpg.sprites.tileObjects.ArmoryDoor;
 import com.smoftware.bensrpg.sprites.tileObjects.ArmoryDoorExit;
 import com.smoftware.bensrpg.sprites.tileObjects.BoundsObject;
 import com.smoftware.bensrpg.sprites.tileObjects.GenericObject;
+import com.smoftware.bensrpg.sprites.tileObjects.Obstacle;
+import com.smoftware.bensrpg.sprites.tileObjects.ToMap1;
+import com.smoftware.bensrpg.sprites.tileObjects.ToMap2;
 
 
 /**
@@ -73,35 +73,43 @@ public class B2WorldCreator {
         TiledMap map = screen.getMap();
         this.player = game.player;
 
-        //create body and fixture variables
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-/*
-        //create bodies/fixtures
-        for(MapObject object : map.getLayers().get("Generic Objects").getObjects().getByType(RectangleMapObject.class)){
+         //create bodies/fixtures
+        for(MapObject object : map.getLayers().get("Obstacles").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
-                new GenericObject(game, screen, player, object);
+                new Obstacle(game, screen, player, object);
         }
 
-        for(MapObject object : map.getLayers().get("Sign post").getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Water Obstacle").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
-                new SignPost("Some testing text", game, screen, object);
+                new Obstacle(game, screen, player, object);
         }
-        */
+
+        for(MapObject object : map.getLayers().get("Bridge Obstacle").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new Obstacle(game, screen, player, object);
+        }
+
+        for(MapObject object : map.getLayers().get("To Map 2").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new ToMap2(game, screen, player, object);
+        }
+    }
+
+    public B2WorldCreator(BensRPG game, Map2Screen screen){
+        World world = screen.getWorld();
+        TiledMap map = screen.getMap();
+        this.player = game.player;
+
+        for(MapObject object : map.getLayers().get("To Map 1").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new ToMap1(game, screen, player, object);
+        }
     }
 
     public B2WorldCreator(BensRPG game, ArmoryScreen screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         this.player = game.player;
-
-        //create body and fixture variables
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
 
         //create bodies/fixtures
         for(MapObject object : map.getLayers().get("Counter").getObjects().getByType(RectangleMapObject.class)){

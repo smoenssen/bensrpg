@@ -21,6 +21,24 @@ public class WorldContactListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef){
+            case BensRPG.HERO_BIT | BensRPG.MAP1_BIT:
+                if(fixA.getFilterData().categoryBits == BensRPG.HERO_BIT)
+                    ((AbstractCollisionTileObject) fixB.getUserData()).onCollision((Hero) fixA.getUserData());
+                else
+                    ((AbstractCollisionTileObject) fixA.getUserData()).onCollision((Hero) fixB.getUserData());
+                break;
+            case BensRPG.HERO_BIT | BensRPG.MAP2_BIT:
+                if(fixA.getFilterData().categoryBits == BensRPG.HERO_BIT)
+                    ((AbstractCollisionTileObject) fixB.getUserData()).onCollision((Hero) fixA.getUserData());
+                else
+                    ((AbstractCollisionTileObject) fixA.getUserData()).onCollision((Hero) fixB.getUserData());
+                break;
+            case BensRPG.HERO_BIT | BensRPG.OBSTACLE_BIT:
+                if(fixA.getFilterData().categoryBits == BensRPG.HERO_BIT)
+                    ((AbstractCollisionTileObject) fixB.getUserData()).onCollision((Hero) fixA.getUserData());
+                else
+                    ((AbstractCollisionTileObject) fixA.getUserData()).onCollision((Hero) fixB.getUserData());
+                break;
             case BensRPG.HERO_BIT | BensRPG.GENERIC_OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits == BensRPG.HERO_BIT)
                     ((AbstractCollisionTileObject) fixB.getUserData()).onCollision((Hero) fixA.getUserData());

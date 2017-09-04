@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -25,7 +23,7 @@ import com.smoftware.bensrpg.tools.WorldContactListener;
 /**
  * Created by brentaureli on 8/14/15.
  */
-public class Map1Screen extends AbstractScreen {
+public class Map2Screen extends AbstractScreen {
     //Reference to our Game, used to set Screens
     private BensRPG game;
 
@@ -51,8 +49,7 @@ public class Map1Screen extends AbstractScreen {
     private boolean showSignPost1 = false;
     private boolean showSignPost2 = false;
 
-
-    public Map1Screen(BensRPG game){
+    public Map2Screen(BensRPG game){
         this.game = game;
 
         //create cam used to follow mario through cam world
@@ -63,7 +60,7 @@ public class Map1Screen extends AbstractScreen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("RPGGame/maps/Map_1.tmx");
+        map = maploader.load("RPGGame/maps/Map_2.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1  / BensRPG.PPM);
 
         //set map dimensions
@@ -72,6 +69,7 @@ public class Map1Screen extends AbstractScreen {
         //initially set our gamcam to be centered correctly at the start of of map
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
+        /*
         //Interactive tiles
         for(MapObject object : map.getLayers().get("Sign 1").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
@@ -82,7 +80,7 @@ public class Map1Screen extends AbstractScreen {
             if (object != null)
                 signPost2 = new SignPost("Lorem ipsum sign 2", game, this, game.player, object);
         }
-
+*/
         //create our Box2D world, setting no gravity in X or Y, and allow bodies to sleep
         world = new World(new Vector2(0, 0), true);
 
