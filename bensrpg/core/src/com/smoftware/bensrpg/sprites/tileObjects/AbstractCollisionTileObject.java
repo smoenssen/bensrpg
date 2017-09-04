@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
+import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 
@@ -21,18 +22,19 @@ import com.smoftware.bensrpg.sprites.Hero;
  * Created by steve on 8/20/17.
  */
 
-public abstract class InteractiveTileObject {
+public abstract class AbstractCollisionTileObject {
     protected World world;
     protected TiledMap map;
     protected Rectangle bounds;
     protected Body body;
     protected PlayScreen screenPlay;
+    protected Map1Screen map1;
     protected ArmoryScreen screenArmory;
     protected MapObject object;
 
     protected Fixture fixture;
 
-    public InteractiveTileObject(PlayScreen screen, MapObject object){
+    public AbstractCollisionTileObject(PlayScreen screen, MapObject object){
         this.object = object;
         this.screenPlay = screen;
         this.world = screen.getWorld();
@@ -55,7 +57,7 @@ public abstract class InteractiveTileObject {
 
     }
 
-    public InteractiveTileObject(ArmoryScreen screen, MapObject object){
+    public AbstractCollisionTileObject(ArmoryScreen screen, MapObject object){
         this.object = object;
         this.screenArmory = screen;
         this.world = screen.getWorld();
@@ -91,4 +93,6 @@ public abstract class InteractiveTileObject {
         return layer.getCell((int)(body.getPosition().x * BensRPG.PPM / 16),
                 (int)(body.getPosition().y * BensRPG.PPM / 16));
     }
+
+    public Rectangle getBounds() { return bounds; };
 }

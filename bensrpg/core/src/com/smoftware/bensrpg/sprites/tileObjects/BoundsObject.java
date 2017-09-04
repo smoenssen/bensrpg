@@ -1,6 +1,5 @@
 package com.smoftware.bensrpg.sprites.tileObjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
@@ -11,7 +10,7 @@ import com.smoftware.bensrpg.sprites.Hero;
  * Created by moenssr on 8/23/2017.
  */
 
-public class BoundsObject extends InteractiveTileObject {
+public class BoundsObject extends AbstractCollisionTileObject {
     BensRPG game;
     Hero player;
 

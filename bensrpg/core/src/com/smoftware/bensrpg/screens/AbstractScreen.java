@@ -2,6 +2,7 @@ package com.smoftware.bensrpg.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -16,4 +17,5 @@ public abstract class AbstractScreen implements Screen {
 
     public abstract TiledMap getMap();
     public abstract World getWorld();
+    public abstract void Interact(Rectangle playerPosition);
 }

@@ -3,6 +3,7 @@ package com.smoftware.bensrpg.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
+import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.screens.PlayScreen;
 
 /**
@@ -43,7 +45,9 @@ public class Hero extends Sprite implements InputProcessor{
     private TextureRegion heroLeftStanding;
 
     private float stateTimer;
+    private Screen currentScreen;
     private PlayScreen screenPlay;
+    private Map1Screen screenMap1;
     private ArmoryScreen screenArmory;
 
     private float lastPositionX;
@@ -67,8 +71,9 @@ public class Hero extends Sprite implements InputProcessor{
         previousState = State.STANDING;
         stateTimer = 0;
 
-        lastPositionX = 32;
-        lastPositionY = 72;
+        //Map 1 starting coordinates
+        lastPositionX = 176;
+        lastPositionY = 14;
         isDefined = false;
 
         numButtonsDown = 0;
@@ -125,6 +130,7 @@ public class Hero extends Sprite implements InputProcessor{
     }
 
     public void setScreen(PlayScreen screen) {
+        currentScreen = (Screen)screen;
         screenPlay = screen;
         world = screen.getWorld();
 
@@ -134,7 +140,19 @@ public class Hero extends Sprite implements InputProcessor{
         defineHero(lastPositionX / BensRPG.PPM, lastPositionY / BensRPG.PPM);
     }
 
+    public void setScreen(Map1Screen screen) {
+        currentScreen = (Screen)screen;
+        screenMap1 = screen;
+        world = screen.getWorld();
+
+        Gdx.app.log("tag", String.format("lastPositionX = %3.2f, lastPositionY = %3.2f", lastPositionX, lastPositionY));
+
+        //define hero in Box2d, at last known position
+        defineHero(lastPositionX / BensRPG.PPM, lastPositionY / BensRPG.PPM);
+    }
+
     public void setScreen(ArmoryScreen screen) {
+        currentScreen = (Screen)screen;
         screenArmory = screen;
         world = screen.getWorld();
 
@@ -217,6 +235,19 @@ public class Hero extends Sprite implements InputProcessor{
             }
             else
                 b2body.setLinearVelocity(new Vector2(-velocityX, 0));
+        }
+
+        if (keycode == Input.Keys.SPACE) {
+            // "A" button pressed
+            if (currentScreen instanceof Map1Screen) {
+                screenMap1.Interact(getBoundingRectangle());
+            }
+            else if (currentScreen instanceof PlayScreen) {
+                screenPlay.Interact(getBoundingRectangle());
+            }
+            else if (currentScreen instanceof ArmoryScreen) {
+                screenArmory.Interact(getBoundingRectangle());
+            }
         }
 
         return true;

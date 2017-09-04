@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -70,7 +71,7 @@ public class PlayScreen extends AbstractScreen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("maps/Beta.tmx");
+        map = maploader.load("maps/Map_1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1  / BensRPG.PPM);
 
         //Get map dimensions
@@ -194,6 +195,11 @@ public class PlayScreen extends AbstractScreen {
     }
     public World getWorld(){
         return world;
+    }
+
+    @Override
+    public void Interact(Rectangle playerPosition) {
+
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.controllers.ActionButtons;
 import com.smoftware.bensrpg.controllers.FloatingThumbpadController;
-import com.smoftware.bensrpg.screens.PlayScreen;
+import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.sprites.Hero;
 
 import java.util.Stack;
@@ -20,7 +20,7 @@ public class BensRPG extends Game {
 
 	public static final boolean bDebug = true;
 
-	public static int V_WIDTH = 260;
+	public static int V_WIDTH = 256;
 	public static int V_HEIGHT = 160;
 	public static float ASPECT_RATIO = (float)V_WIDTH/(float)V_HEIGHT;
 	public static final float PPM = 100;	// pixels per meter
@@ -42,6 +42,7 @@ public class BensRPG extends Game {
 	public Hero player;
 	public SpriteBatch batch;
 	private Stack screenStack;
+	private Screen currentScreen;
 
 	private OrthographicCamera camera;
 	private Viewport viewport;
@@ -64,21 +65,23 @@ public class BensRPG extends Game {
 		ASPECT_RATIO = (float)Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
 		V_HEIGHT = (int)((float)V_WIDTH / ASPECT_RATIO);
 
-		//Create camera
+		Gdx.app.log("tag", String.format("screen width = %d, height = %d", V_WIDTH, V_HEIGHT));
+
+		//Create camera and view port
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 10f*ASPECT_RATIO, 10f);
-
-		//Create a Stage and controllers
-		actionButtons = new ActionButtons(this);
-		touchpad = new FloatingThumbpadController();
 		viewport = new FitViewport(BensRPG.V_WIDTH, BensRPG.V_HEIGHT, new OrthographicCamera());
-		stage = new Stage(viewport, batch);
-		stage.addActor(touchpad.getTouchpad());
-		stage.addActor(actionButtons.buttonTable);
-		actionButtons.setStage(stage);
 
-		if (Gdx.app.getType() == Application.ApplicationType.Android)
-			Gdx.input.setInputProcessor(stage);
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            //Create a Stage and controllers
+            stage = new Stage(viewport, batch);
+            actionButtons = new ActionButtons(this);
+            touchpad = new FloatingThumbpadController();
+            stage.addActor(touchpad.getTouchpad());
+            stage.addActor(actionButtons.buttonTable);
+            actionButtons.setStage(stage);
+            Gdx.input.setInputProcessor(stage);
+        }
 		else
 			Gdx.input.setInputProcessor(player);
 /*
@@ -95,7 +98,7 @@ public class BensRPG extends Game {
 
 		manager.finishLoading();
 */
-		PlayScreen s = new PlayScreen(this);
+		Map1Screen s = new Map1Screen(this);
 		setCurrentScreen(s);
 
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
@@ -110,24 +113,31 @@ public class BensRPG extends Game {
 			//screen.dispose();
 
 			//peek previous screen, which now will be the current screen
-			screen = (Screen)screenStack.peek();
-			setScreen(screen);
+			currentScreen = (Screen)screenStack.peek();
+			setScreen(currentScreen);
 		}
 		//Gdx.app.log("tag", String.format("setPreviousScreen end stack size = %d", screenStack.size()));
 	}
 
 	public void setCurrentScreen(Screen screen) {
 		//Gdx.app.log("tag", String.format("setCurrentScreen begin stack size = %d", screenStack.size()));
-		screenStack.push(screen);
-		setScreen(screen);
+		currentScreen = screen;
+		screenStack.push(currentScreen);
+		setScreen(currentScreen);
 		//Gdx.app.log("tag", String.format("setCurrentScreen end stack size = %d", screenStack.size()));
+	}
+
+	public Screen getCurrentScreen() {
+		return currentScreen;
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		viewport.update(width, height);
-		actionButtons.resize(width, height);
+
+		if (Gdx.app.getType() == Application.ApplicationType.Android)
+			actionButtons.resize(width, height);
 	}
 
 	public void update(float dt){
@@ -135,10 +145,12 @@ public class BensRPG extends Game {
 	}
 
 	public void handleInput(){
-		if(actionButtons.isRightPressed())
-			Gdx.app.log("tag", "right pressed");
-		else if (actionButtons.isLeftPressed())
-			Gdx.app.log("tag", "left pressed");
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			if (actionButtons.isRightPressed())
+				Gdx.app.log("tag", "right pressed");
+			else if (actionButtons.isLeftPressed())
+				Gdx.app.log("tag", "left pressed");
+		}
 	}
 
 	@Override
@@ -155,8 +167,11 @@ public class BensRPG extends Game {
 		batch.begin();
 		player.draw(batch);
 		batch.end();
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
+
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			stage.act(Gdx.graphics.getDeltaTime());
+			stage.draw();
+		}
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import com.smoftware.bensrpg.sprites.Hero;
  * Created by moenssr on 8/23/2017.
  */
 
-public class GenericObject extends InteractiveTileObject {
+public class GenericObject extends AbstractCollisionTileObject {
     BensRPG game;
     Hero player;
 
@@ -35,6 +35,6 @@ public class GenericObject extends InteractiveTileObject {
 
     @Override
     public void onCollision(Hero hero) {
-
+        Gdx.app.log("tag", "onCollision!");
     }
 }

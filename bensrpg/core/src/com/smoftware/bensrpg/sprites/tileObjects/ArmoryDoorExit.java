@@ -1,17 +1,15 @@
 package com.smoftware.bensrpg.sprites.tileObjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
-import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 
 /**
  * Created by moenssr on 8/22/2017.
  */
 
-public class ArmoryDoorExit  extends InteractiveTileObject {
+public class ArmoryDoorExit  extends AbstractCollisionTileObject {
     BensRPG game;
     Hero player;
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
+import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 import com.smoftware.bensrpg.sprites.tileObjects.ArmoryDoor;
@@ -33,15 +34,18 @@ public class B2WorldCreator {
 
         //create bodies/fixtures
         for(MapObject object : map.getLayers().get("Generic Objects").getObjects().getByType(RectangleMapObject.class)){
-            new GenericObject(game, screen, player, object);
+            if (object != null)
+                new GenericObject(game, screen, player, object);
         }
 
         for(MapObject object : map.getLayers().get("Bounds").getObjects().getByType(RectangleMapObject.class)){
-            new BoundsObject(game, screen, player, object);
+            if (object != null)
+                new BoundsObject(game, screen, player, object);
         }
 
         for(MapObject object : map.getLayers().get("Armory Door").getObjects().getByType(RectangleMapObject.class)){
-            new ArmoryDoor(game, screen, player, object);
+            if (object != null)
+                new ArmoryDoor(game, screen, player, object);
         }
 /*
         //create coin bodies/fixtures
@@ -62,6 +66,30 @@ public class B2WorldCreator {
             turtles.add(new Turtle(screen, rect.getX() / BensRPG.PPM, rect.getY() / BensRPG.PPM));
         }
 */
+    }
+
+    public B2WorldCreator(BensRPG game, Map1Screen screen){
+        World world = screen.getWorld();
+        TiledMap map = screen.getMap();
+        this.player = game.player;
+
+        //create body and fixture variables
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+/*
+        //create bodies/fixtures
+        for(MapObject object : map.getLayers().get("Generic Objects").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new GenericObject(game, screen, player, object);
+        }
+
+        for(MapObject object : map.getLayers().get("Sign post").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new SignPost("Some testing text", game, screen, object);
+        }
+        */
     }
 
     public B2WorldCreator(BensRPG game, ArmoryScreen screen){
