@@ -11,7 +11,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.controllers.ActionButtons;
 import com.smoftware.bensrpg.controllers.FloatingThumbpadController;
+import com.smoftware.bensrpg.screens.ArmoryScreen;
 import com.smoftware.bensrpg.screens.Map1Screen;
+import com.smoftware.bensrpg.screens.Map2Screen;
+import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 
 import java.util.Stack;
@@ -160,10 +163,12 @@ public class BensRPG extends Game {
 
 	public void handleInput(){
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
-			if (actionButtons.isRightPressed())
-				Gdx.app.log("tag", "right pressed");
+			if (actionButtons.isRightPressed()) {
+                Gdx.app.log("tag", "a pressed");
+                player.handleAButtonPressed();
+            }
 			else if (actionButtons.isLeftPressed())
-				Gdx.app.log("tag", "left pressed");
+				player.handleBButtonPressed();
 		}
 	}
 
@@ -174,7 +179,7 @@ public class BensRPG extends Game {
 		camera.update();
 
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
-			//Move player with Touchpad - velocity is directly proportionate to the knob position
+			//Move player with Touchpad - velocity is directly proportional to the knob position
 			player.b2body.setLinearVelocity(touchpad.getDirection());
 		}
 

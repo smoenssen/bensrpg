@@ -195,6 +195,25 @@ public class Hero extends Sprite implements InputProcessor{
         defineHero(x, y);
     }
 
+    public void handleAButtonPressed() {
+        if (currentScreen instanceof Map1Screen) {
+            screenMap1.Interact(getBoundingRectangle());
+        }
+        else if (currentScreen instanceof Map2Screen) {
+            screenMap2.Interact(getBoundingRectangle());
+        }
+        else if (currentScreen instanceof PlayScreen) {
+            screenPlay.Interact(getBoundingRectangle());
+        }
+        else if (currentScreen instanceof ArmoryScreen) {
+            screenArmory.Interact(getBoundingRectangle());
+        }
+    }
+
+    public static void handleBButtonPressed() {
+
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         //Gdx.app.log("tag", String.format("keycode = %d", keycode));
@@ -265,18 +284,13 @@ public class Hero extends Sprite implements InputProcessor{
 
         if (keycode == Input.Keys.SPACE) {
             // "A" button pressed
-            if (currentScreen instanceof Map1Screen) {
-                screenMap1.Interact(getBoundingRectangle());
-            }
-            else if (currentScreen instanceof Map2Screen) {
-                screenMap2.Interact(getBoundingRectangle());
-            }
-            else if (currentScreen instanceof PlayScreen) {
-                screenPlay.Interact(getBoundingRectangle());
-            }
-            else if (currentScreen instanceof ArmoryScreen) {
-                screenArmory.Interact(getBoundingRectangle());
-            }
+            Gdx.app.log("tag", "a pressed");
+            handleAButtonPressed();
+        }
+
+        if (keycode == Input.Keys.ESCAPE) {
+            // "B" button pressed
+            handleBButtonPressed();
         }
 
         return true;
