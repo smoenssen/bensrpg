@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.ArmoryScreen;
 import com.smoftware.bensrpg.screens.Map1Screen;
@@ -17,6 +18,8 @@ import com.smoftware.bensrpg.sprites.tileObjects.GenericObject;
 import com.smoftware.bensrpg.sprites.tileObjects.Obstacle;
 import com.smoftware.bensrpg.sprites.tileObjects.ToMap1;
 import com.smoftware.bensrpg.sprites.tileObjects.ToMap2;
+import com.smoftware.bensrpg.sprites.tileObjects.Water;
+import com.smoftware.bensrpg.sprites.tileObjects.ZeroOpacity;
 
 
 /**
@@ -25,7 +28,9 @@ import com.smoftware.bensrpg.sprites.tileObjects.ToMap2;
 public class B2WorldCreator {
     //private Array<Goomba> goombas;
     //private Array<Turtle> turtles;
-    Hero player;
+    private Hero player;
+    private Array<Water> waterArrary;
+    private Array<ZeroOpacity> zeroOpacityArray;
 
     public B2WorldCreator(BensRPG game, PlayScreen screen){
         World world = screen.getWorld();
@@ -72,6 +77,7 @@ public class B2WorldCreator {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         this.player = game.player;
+        waterArrary = new Array<Water>();
 
          //create bodies/fixtures
         for(MapObject object : map.getLayers().get("Obstacles").getObjects().getByType(RectangleMapObject.class)){
@@ -81,7 +87,7 @@ public class B2WorldCreator {
 
         for(MapObject object : map.getLayers().get("Water Obstacle").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
-                new Obstacle(game, screen, player, object);
+                waterArrary.add(new Water(game, screen, player, object));
         }
 
         for(MapObject object : map.getLayers().get("Bridge Obstacle").getObjects().getByType(RectangleMapObject.class)){
@@ -89,7 +95,7 @@ public class B2WorldCreator {
                 new Obstacle(game, screen, player, object);
         }
 
-        for(MapObject object : map.getLayers().get("To Map 2").getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("To Next Map").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
                 new ToMap2(game, screen, player, object);
         }
@@ -99,10 +105,32 @@ public class B2WorldCreator {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         this.player = game.player;
+        waterArrary = new Array<Water>();
+        zeroOpacityArray = new Array<ZeroOpacity>();
 
-        for(MapObject object : map.getLayers().get("To Map 1").getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Obstacles").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new Obstacle(game, screen, player, object);
+        }
+
+        for(MapObject object : map.getLayers().get("Water Obstacle").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                waterArrary.add(new Water(game, screen, player, object));
+        }
+
+        for(MapObject object : map.getLayers().get("Bridge Obstacles").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                new Obstacle(game, screen, player, object);
+        }
+
+        for(MapObject object : map.getLayers().get("To Previous Map").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
                 new ToMap1(game, screen, player, object);
+        }
+
+        for(MapObject object : map.getLayers().get("0 Opacity").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null)
+                zeroOpacityArray.add(new ZeroOpacity(game, screen, player, object));
         }
     }
 
@@ -123,5 +151,13 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get("Exit Door").getObjects().getByType(RectangleMapObject.class)){
             new ArmoryDoorExit(game, screen, player, object);
         }
+    }
+
+    public Array<Water> getWaterArrary() {
+        return waterArrary;
+    }
+
+    public Array<ZeroOpacity> getZeroOpacityArray() {
+        return zeroOpacityArray;
     }
 }

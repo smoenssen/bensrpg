@@ -19,7 +19,7 @@ public class ToMap1 extends AbstractCollisionTileObject {
         this.player = player;
 
         fixture.setUserData(this);
-        setCategoryFilter(BensRPG.MAP1_BIT);
+        setCategoryFilter(BensRPG.PREV_MAP_BIT);
     }
 
     @Override

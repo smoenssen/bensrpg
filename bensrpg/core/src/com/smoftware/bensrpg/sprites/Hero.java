@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -76,6 +75,12 @@ public class Hero extends Sprite implements InputProcessor{
         //Map 1 starting coordinates
         lastPositionX = 176;
         lastPositionY = 14;
+
+        //TEST CODE//////////
+        lastPositionX = 620;
+        lastPositionY = 900;
+        ///////////////////
+
         isDefined = false;
 
         numButtonsDown = 0;
@@ -168,10 +173,7 @@ public class Hero extends Sprite implements InputProcessor{
             Gdx.app.log("tag", String.format("lastPositionX = %3.2f, lastPositionY = %3.2f", lastPositionX, lastPositionY));
 
             //define hero in Box2d, at beginning of map
-            //srm todo: figure out offset into next screen based on last Y position
-            //y position in center of map1 exit = 896
-            float offset = 896 - lastPositionY + (getHeight() * 2);
-            defineHero(16 / BensRPG.PPM, (232 - offset)/ BensRPG.PPM);
+            defineHero(16 / BensRPG.PPM, 232/ BensRPG.PPM);
         }
     }
 
@@ -265,6 +267,9 @@ public class Hero extends Sprite implements InputProcessor{
             // "A" button pressed
             if (currentScreen instanceof Map1Screen) {
                 screenMap1.Interact(getBoundingRectangle());
+            }
+            else if (currentScreen instanceof Map2Screen) {
+                screenMap2.Interact(getBoundingRectangle());
             }
             else if (currentScreen instanceof PlayScreen) {
                 screenPlay.Interact(getBoundingRectangle());
@@ -440,6 +445,10 @@ public class Hero extends Sprite implements InputProcessor{
         return stateTimer;
     }
 
+    //srm how to draw sprite behind map layer
+    //http://www.gamefromscratch.com/post/2014/05/01/LibGDX-Tutorial-11-Tiled-Maps-Part-2-Adding-a-character-sprite.aspx
+    //https://stackoverflow.com/questions/18262803/libgdx-sprite-tile-rendering-behind-and-in-front-of-a-object
+
 /*
     public void hit(Enemy enemy){
         if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
@@ -457,8 +466,12 @@ public class Hero extends Sprite implements InputProcessor{
     }
     */
 
+//todo: don't recreate a new hero everytime setting a screen
 
     public void defineHero(float x, float y){
+        //if (isDefined)
+            //dispose something??
+
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -475,13 +488,15 @@ public class Hero extends Sprite implements InputProcessor{
                                BensRPG.ARMORY_DOOR_BIT |
                                BensRPG.ARMORY_EXIT_DOOR_BIT |
                                BensRPG.OBSTACLE_BIT |
-                               BensRPG.MAP1_BIT |
-                               BensRPG.MAP2_BIT;
+                               BensRPG.PREV_MAP_BIT |
+                               BensRPG.NEXT_MAP_BIT |
+                               BensRPG.WATER_BIT |
+                               BensRPG.ZERO_OPACITY;
 
         fdef.shape = shape;
         fdef.restitution = 0.0f;
         b2body.createFixture(fdef).setUserData(this);
-
+/*
         EdgeShape head = new EdgeShape();
         head.set(new Vector2(-2 / BensRPG.PPM, 6 / BensRPG.PPM), new Vector2(2 / BensRPG.PPM, 6 / BensRPG.PPM));
         fdef.filter.categoryBits = BensRPG.MARIO_HEAD_BIT;
@@ -489,9 +504,9 @@ public class Hero extends Sprite implements InputProcessor{
         fdef.isSensor = true;
 
         b2body.createFixture(fdef).setUserData(this);
-
+*/
         shape.dispose();
-        head.dispose();
+   //     head.dispose();
 
         isDefined = true;
     }

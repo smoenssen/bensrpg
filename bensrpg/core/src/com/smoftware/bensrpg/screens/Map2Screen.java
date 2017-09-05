@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,7 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.sprites.Hero;
-import com.smoftware.bensrpg.sprites.tileObjects.SignPost;
+import com.smoftware.bensrpg.sprites.tileObjects.Switch;
+import com.smoftware.bensrpg.sprites.tileObjects.ZeroOpacity;
 import com.smoftware.bensrpg.tools.B2WorldCreator;
 import com.smoftware.bensrpg.tools.WorldContactListener;
 
@@ -44,10 +47,8 @@ public class Map2Screen extends AbstractScreen {
     private Music music;
 
     //Interactive tiles
-    private SignPost signPost1;
-    private SignPost signPost2;
-    private boolean showSignPost1 = false;
-    private boolean showSignPost2 = false;
+    private Switch mountainSwitch;
+    private boolean switchOn = false;
 
     public Map2Screen(BensRPG game){
         this.game = game;
@@ -69,18 +70,12 @@ public class Map2Screen extends AbstractScreen {
         //initially set our gamcam to be centered correctly at the start of of map
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-        /*
         //Interactive tiles
-        for(MapObject object : map.getLayers().get("Sign 1").getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get("Interaction").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
-                signPost1 = new SignPost("Lorem ipsum dolor sit amet", game, this, game.player, object);
+                mountainSwitch = new Switch(object);
         }
 
-        for(MapObject object : map.getLayers().get("Sign 2").getObjects().getByType(RectangleMapObject.class)){
-            if (object != null)
-                signPost2 = new SignPost("Lorem ipsum sign 2", game, this, game.player, object);
-        }
-*/
         //create our Box2D world, setting no gravity in X or Y, and allow bodies to sleep
         world = new World(new Vector2(0, 0), true);
 
@@ -147,12 +142,6 @@ public class Map2Screen extends AbstractScreen {
         game.batch.begin();
         game.player.draw(game.batch);
 
-        if (showSignPost1)
-            signPost1.draw();
-
-        if (showSignPost2)
-            signPost2.draw();
-
         game.batch.end();
     }
 
@@ -164,7 +153,6 @@ public class Map2Screen extends AbstractScreen {
     public void resize(int width, int height) {
         //updated our game viewport
         gamePort.update(width,height);
-
     }
 
     public TiledMap getMap(){
@@ -176,17 +164,26 @@ public class Map2Screen extends AbstractScreen {
 
     @Override
     public void Interact(Rectangle playerPosition) {
-        if (playerPosition.overlaps(signPost1.getBounds()) && showSignPost1 == false) {
-            showSignPost1 = true;
-            signPost1.Interact(playerPosition);
-        }
-        else if (playerPosition.overlaps(signPost2.getBounds()) && showSignPost2 == false) {
-            showSignPost2 = true;
-            signPost2.Interact(playerPosition);
-        }
-        else {
-            showSignPost1 = false;
-            showSignPost2 = false;
+        if (playerPosition.overlaps(mountainSwitch.getBounds())) {
+            mountainSwitch.Interact(playerPosition);
+
+            if (!switchOn) {
+                switchOn = true;
+                for (ZeroOpacity object : creator.getZeroOpacityArray()) {
+                    object.setCategoryFilter(BensRPG.NOTHING_BIT);
+                }
+
+                map.getLayers().get("Switch Press").setVisible((false));
+            }
+            else {
+                switchOn = false;
+                for (ZeroOpacity object : creator.getZeroOpacityArray()) {
+                    object.setCategoryFilter(BensRPG.ZERO_OPACITY);
+                }
+
+                map.getLayers().get("Switch Press").setVisible((true));
+            }
+
         }
     }
 

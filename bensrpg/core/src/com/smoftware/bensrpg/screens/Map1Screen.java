@@ -73,14 +73,14 @@ public class Map1Screen extends AbstractScreen {
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         //Interactive tiles
-        for(MapObject object : map.getLayers().get("Sign 1").getObjects().getByType(RectangleMapObject.class)){
-            if (object != null)
-                signPost1 = new SignPost("Lorem ipsum dolor sit amet", game, this, game.player, object);
-        }
-
-        for(MapObject object : map.getLayers().get("Sign 2").getObjects().getByType(RectangleMapObject.class)){
-            if (object != null)
-                signPost2 = new SignPost("Lorem ipsum sign 2", game, this, game.player, object);
+        short index = 0;
+        for(MapObject object : map.getLayers().get("Interaction").getObjects().getByType(RectangleMapObject.class)){
+            if (object != null) {
+                if (index++ == 0)
+                    signPost1 = new SignPost("Lorem ipsum dolor sit amet sign 1", game, this, game.player, object);
+                else
+                    signPost2 = new SignPost("Lorem ipsum dolor sit amet sign 2", game, this, game.player, object);
+            }
         }
 
         //create our Box2D world, setting no gravity in X or Y, and allow bodies to sleep
@@ -131,7 +131,7 @@ public class Map1Screen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        //separate our update logic from render
+        //separate our update logic from renderb2body.di
         update(delta);
 
         //Clear the game screen with Black
@@ -149,8 +149,9 @@ public class Map1Screen extends AbstractScreen {
         game.batch.begin();
         game.player.draw(game.batch);
 
-        if (showSignPost1)
+        if (showSignPost1) {
             signPost1.draw();
+        }
 
         if (showSignPost2)
             signPost2.draw();

@@ -33,11 +33,25 @@ public class BensRPG extends Game {
 	public static final short GENERIC_OBJECT_BIT = 8;
 	public static final short OBSTACLE_BIT = 16;
 	public static final short BOUNDS_OBJECT_BIT = 32;
-	public static final short MAP1_BIT = 64;
-	public static final short MAP2_BIT = 128;
-	public static final short ITEM_BIT = 256;
-	public static final short MARIO_HEAD_BIT = 512;
+	public static final short WATER_BIT = 64;
+	public static final short NEXT_MAP_BIT = 128;
+	public static final short PREV_MAP_BIT = 256;
+	public static final short ZERO_OPACITY = 512;
 	public static final short FIREBALL_BIT = 1024;
+
+	/*
+	nothing
+	obstacle
+	to next map
+	to prev map
+	interaction (sign, people, gems, doors, etc.)
+	water
+	bridge
+	under bridge
+	waterfall
+	zero opacity
+	player
+	 */
 
 	public Hero player;
 	public SpriteBatch batch;
