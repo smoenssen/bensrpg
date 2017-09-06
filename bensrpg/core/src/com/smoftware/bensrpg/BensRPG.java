@@ -11,10 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.controllers.ActionButtons;
 import com.smoftware.bensrpg.controllers.FloatingThumbpadController;
-import com.smoftware.bensrpg.screens.ArmoryScreen;
 import com.smoftware.bensrpg.screens.Map1Screen;
-import com.smoftware.bensrpg.screens.Map2Screen;
-import com.smoftware.bensrpg.screens.PlayScreen;
 import com.smoftware.bensrpg.sprites.Hero;
 
 import java.util.Stack;
@@ -162,13 +159,19 @@ public class BensRPG extends Game {
 	}
 
 	public void handleInput(){
+		// This type of handling should only be used to see if button is being held down.
+		// For one shot button presses it is handled in the ActionButton listeners
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
 			if (actionButtons.isRightPressed()) {
                 Gdx.app.log("tag", "a pressed");
-                player.handleAButtonPressed();
+                //player.handleAButtonPressed();
             }
-			else if (actionButtons.isLeftPressed())
-				player.handleBButtonPressed();
+			else {
+				if (actionButtons.isLeftPressed())
+					Hero.handleBButtonPressed();
+				//else
+				//	Hero.handleBButtonReleased();
+			}
 		}
 	}
 
@@ -180,7 +183,8 @@ public class BensRPG extends Game {
 
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
 			//Move player with Touchpad - velocity is directly proportional to the knob position
-			player.b2body.setLinearVelocity(touchpad.getDirection());
+			//player.b2body.setLinearVelocity(touchpad.getDirection());
+			player.b2body.setLinearVelocity(touchpad.getDirection().x * Hero.velocityXFactor, touchpad.getDirection().y * Hero.velocityYFactor);
 		}
 
 		batch.begin();

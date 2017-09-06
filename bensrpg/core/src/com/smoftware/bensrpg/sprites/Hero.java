@@ -61,10 +61,10 @@ public class Hero extends Sprite implements InputProcessor{
     private boolean upKeyDown;
     private boolean downKeyDown;
 
-    float velocityX;
-    float velocityY;
-    float velocityXFactor;
-    float velocityYFactor;
+    static float velocityX;
+    static float velocityY;
+    public static float velocityXFactor;
+    public static float velocityYFactor;
 
     public Hero(){
         //initialize default values
@@ -91,8 +91,8 @@ public class Hero extends Sprite implements InputProcessor{
 
         velocityX = 1.0f;
         velocityY = 1.0f;
-        velocityXFactor = 0.8f;
-        velocityYFactor = 0.8f;
+        velocityXFactor = 0.7f;
+        velocityYFactor = 0.7f;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -210,8 +210,18 @@ public class Hero extends Sprite implements InputProcessor{
         }
     }
 
-    public static void handleBButtonPressed() {
+    public static void handleAButtonReleased() {
 
+    }
+
+    public static void handleBButtonPressed() {
+        velocityXFactor = 2.0f;
+        velocityYFactor = 2.0f;
+    }
+
+    public static void handleBButtonReleased() {
+        velocityXFactor = 0.7f;
+        velocityYFactor = 0.7f;
     }
 
     @Override

@@ -20,11 +20,12 @@ import com.smoftware.bensrpg.BensRPG;
 public class ActionButtons {
     Viewport viewport;
     Stage stage = null;
-    boolean leftPressed, rightPressed;
+    boolean leftPressed = false, rightPressed = false, leftJustPressed = false, rightJustPressed = false;
     OrthographicCamera cam;
     public Table buttonTable;
 
     public ActionButtons(BensRPG game){
+        final BensRPG thisGame = game;
         cam = new OrthographicCamera();
         viewport = new FitViewport(BensRPG.V_WIDTH/BensRPG.PPM, BensRPG.V_HEIGHT/BensRPG.PPM, cam);
 
@@ -36,9 +37,11 @@ public class ActionButtons {
         rightImg.setSize(25, 25);
         rightImg.addListener(new InputListener() {
 
+            // Note: these functions are only called once
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 rightPressed = true;
+                thisGame.player.handleAButtonPressed();
                 return true;
             }
 
@@ -52,9 +55,11 @@ public class ActionButtons {
         leftImg.setSize(25, 25);
         leftImg.addListener(new InputListener() {
 
+            // Note: these functions are only called once
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 leftPressed = true;
+                thisGame.player.handleBButtonPressed();
                 return true;
             }
 
