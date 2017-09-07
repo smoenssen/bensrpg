@@ -13,21 +13,18 @@ import com.smoftware.bensrpg.sprites.Hero;
 
 public class GenericObject extends AbstractCollisionTileObject {
     BensRPG game;
-    Hero player;
 
-    public GenericObject(BensRPG game, PlayScreen screen, Hero player, MapObject object) {
+    public GenericObject(BensRPG game, PlayScreen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.GENERIC_OBJECT_BIT);
     }
 
-    public GenericObject(BensRPG game, ArmoryScreen screen, Hero player, MapObject object) {
+    public GenericObject(BensRPG game, ArmoryScreen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.GENERIC_OBJECT_BIT);

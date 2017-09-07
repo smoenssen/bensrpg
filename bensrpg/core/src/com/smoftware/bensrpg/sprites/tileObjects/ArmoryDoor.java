@@ -12,12 +12,10 @@ import com.smoftware.bensrpg.sprites.Hero;
 
 public class ArmoryDoor extends AbstractCollisionTileObject {
     BensRPG game;
-    Hero player;
 
-    public ArmoryDoor(BensRPG game, PlayScreen screen, Hero player, MapObject object){
+    public ArmoryDoor(BensRPG game, PlayScreen screen, MapObject object){
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.ARMORY_DOOR_BIT);

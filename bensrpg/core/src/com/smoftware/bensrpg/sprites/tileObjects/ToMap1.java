@@ -11,12 +11,10 @@ import com.smoftware.bensrpg.sprites.Hero;
 
 public class ToMap1 extends AbstractCollisionTileObject {
     BensRPG game;
-    Hero player;
 
-    public ToMap1(BensRPG game, Map2Screen screen, Hero player, MapObject object){
+    public ToMap1(BensRPG game, Map2Screen screen, MapObject object){
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.PREV_MAP_BIT);

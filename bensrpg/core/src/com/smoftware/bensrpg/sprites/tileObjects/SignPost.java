@@ -27,12 +27,10 @@ public class SignPost extends AbstractInteractiveTileObject{
     private Stage stage;
     private Skin skin;
     private BensRPG game;
-    private Hero player;
     private Rectangle bounds;
 
-    public SignPost(String text, BensRPG game, Map1Screen screen, Hero player, MapObject object) {
+    public SignPost(String text, BensRPG game, Map1Screen screen, MapObject object) {
         this.game = game;
-        this.player = player;
 
         // convert rectangle to correct scaled size
         this.bounds = ((RectangleMapObject) object).getRectangle();

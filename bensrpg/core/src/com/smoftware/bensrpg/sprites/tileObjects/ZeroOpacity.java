@@ -11,12 +11,10 @@ import com.smoftware.bensrpg.sprites.Hero;
 
 public class ZeroOpacity extends AbstractCollisionTileObject {
     BensRPG game;
-    Hero player;
 
-    public ZeroOpacity(BensRPG game, Map2Screen screen, Hero player, MapObject object) {
+    public ZeroOpacity(BensRPG game, Map2Screen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.ZERO_OPACITY);

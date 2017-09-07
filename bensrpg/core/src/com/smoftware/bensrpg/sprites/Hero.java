@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -34,6 +35,8 @@ public class Hero extends Sprite implements InputProcessor{
 
     public World world;
     public Body b2body;
+    private FixtureDef fdef;
+    private boolean repositionBody;
 
     private Animation heroWalkingUp;
     private Animation heroWalkingDown;
@@ -54,6 +57,9 @@ public class Hero extends Sprite implements InputProcessor{
     private float lastPositionX;
     private float lastPositionY;
     private boolean isDefined;
+    private boolean isDefining;
+    private float repositionX;
+    private float repositionY;
 
     private short numButtonsDown;
     private boolean leftKeyDown;
@@ -82,6 +88,8 @@ public class Hero extends Sprite implements InputProcessor{
         ///////////////////
 
         isDefined = false;
+        isDefining = false;
+        repositionBody = false;
 
         numButtonsDown = 0;
         leftKeyDown = false;
@@ -210,16 +218,16 @@ public class Hero extends Sprite implements InputProcessor{
         }
     }
 
-    public static void handleAButtonReleased() {
+    public void handleAButtonReleased() {
 
     }
 
-    public static void handleBButtonPressed() {
+    public void handleBButtonPressed() {
         velocityXFactor = 2.0f;
         velocityYFactor = 2.0f;
     }
 
-    public static void handleBButtonReleased() {
+    public void handleBButtonReleased() {
         velocityXFactor = 0.7f;
         velocityYFactor = 0.7f;
     }
@@ -366,6 +374,18 @@ public class Hero extends Sprite implements InputProcessor{
                 setLinearVelocityForOneButtonDown();
         }
 
+        if (keycode == Input.Keys.SPACE) {
+            // "A" button released
+            Gdx.app.log("tag", "A released");
+            handleAButtonReleased();
+        }
+
+        if (keycode == Input.Keys.ESCAPE) {
+            // "B" button released
+            Gdx.app.log("tag", "B released");
+            handleBButtonReleased();
+        }
+
         return true;
     }
 
@@ -400,8 +420,24 @@ public class Hero extends Sprite implements InputProcessor{
     }
 
     public void update(float dt){
+///////////TEST CODE/////////////
+/*
+        if (repositionBody) {
+            b2body.setTransform(repositionX, repositionY, b2body.getAngle());
+            repositionBody = false;
 
+            Array<Fixture> fList = b2body.getFixtureList();
+            for (Fixture f : fList)
+                b2body.destroyFixture(f);
+
+            b2body.createFixture(fdef).setUserData(this);
+            b2body.setAwake(true);
+            b2body.setActive(true);
+        }
+*//////////////////////////
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+
+        Gdx.app.log("tag", String.format("b2body X = %3.2f", b2body.getPosition().x));
 
         //update sprite with the correct frame depending on hero's current action
         //if standing, then don't update
@@ -490,50 +526,62 @@ public class Hero extends Sprite implements InputProcessor{
     }
     */
 
+    public boolean isDefining() { return isDefining; }
+
 //todo: don't recreate a new hero everytime setting a screen
+    //https://stackoverflow.com/questions/14678223/libgdx-box2d-setting-up-an-image-to-a-body
+    private void defineHero(float x, float y){
+        isDefining = true;
 
-    public void defineHero(float x, float y){
-        //if (isDefined)
-            //dispose something??
-
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(x, y);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / BensRPG.PPM);
-        PolygonShape shape1 = new PolygonShape();
-        shape1.setAsBox(6f / BensRPG.PPM, 6f / BensRPG.PPM);
-        fdef.filter.categoryBits = BensRPG.HERO_BIT;
-        fdef.filter.maskBits = BensRPG.GENERIC_OBJECT_BIT |
-                               BensRPG.BOUNDS_OBJECT_BIT |
-                               BensRPG.ARMORY_DOOR_BIT |
-                               BensRPG.ARMORY_EXIT_DOOR_BIT |
-                               BensRPG.OBSTACLE_BIT |
-                               BensRPG.PREV_MAP_BIT |
-                               BensRPG.NEXT_MAP_BIT |
-                               BensRPG.WATER_BIT |
-                               BensRPG.ZERO_OPACITY;
-
-        fdef.shape = shape;
-        fdef.restitution = 0.0f;
-        b2body.createFixture(fdef).setUserData(this);
+        Gdx.app.log("tag", String.format("defineHero X = %3.2f, Y = %3.2f", x, y));
 /*
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / BensRPG.PPM, 6 / BensRPG.PPM), new Vector2(2 / BensRPG.PPM, 6 / BensRPG.PPM));
-        fdef.filter.categoryBits = BensRPG.MARIO_HEAD_BIT;
-        fdef.shape = head;
-        fdef.isSensor = true;
+        if (isDefined) {
+            repositionBody = true;
+            repositionX = x;
+            repositionY = y;
+        }
+        else {*/
+            BodyDef bdef = new BodyDef();
+            bdef.position.set(x, y);
+            bdef.type = BodyDef.BodyType.DynamicBody;
+            bdef.allowSleep = false;
+            b2body = world.createBody(bdef);
 
-        b2body.createFixture(fdef).setUserData(this);
-*/
-        shape.dispose();
-   //     head.dispose();
+            fdef = new FixtureDef();
+            CircleShape shape = new CircleShape();
+            shape.setRadius(6 / BensRPG.PPM);
+            PolygonShape shape1 = new PolygonShape();
+            shape1.setAsBox(6f / BensRPG.PPM, 6f / BensRPG.PPM);
+            fdef.filter.categoryBits = BensRPG.HERO_BIT;
+            fdef.filter.maskBits = BensRPG.GENERIC_OBJECT_BIT |
+                    BensRPG.BOUNDS_OBJECT_BIT |
+                    BensRPG.ARMORY_DOOR_BIT |
+                    BensRPG.ARMORY_EXIT_DOOR_BIT |
+                    BensRPG.OBSTACLE_BIT |
+                    BensRPG.PREV_MAP_BIT |
+                    BensRPG.NEXT_MAP_BIT |
+                    BensRPG.WATER_BIT |
+                    BensRPG.ZERO_OPACITY;
 
-        isDefined = true;
-    }
+            fdef.shape = shape;
+            fdef.restitution = 0.0f;
+            b2body.createFixture(fdef).setUserData(this);
+    /*
+            EdgeShape head = new EdgeShape();
+            head.set(new Vector2(-2 / BensRPG.PPM, 6 / BensRPG.PPM), new Vector2(2 / BensRPG.PPM, 6 / BensRPG.PPM));
+            fdef.filter.categoryBits = BensRPG.MARIO_HEAD_BIT;
+            fdef.shape = head;
+            fdef.isSensor = true;
+
+            b2body.createFixture(fdef).setUserData(this);
+    */
+            shape.dispose();
+            //     head.dispose();
+
+            isDefined = true;
+            isDefining = false;
+        }
+    //}
 /*
     public void fire(){
         fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));

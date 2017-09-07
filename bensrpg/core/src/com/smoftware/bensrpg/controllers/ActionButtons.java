@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.BensRPG;
+import com.smoftware.bensrpg.sprites.Hero;
 
 /**
  * Created by moenssr on 8/30/2017.
@@ -40,14 +41,17 @@ public class ActionButtons {
             // Note: these functions are only called once
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("tag", "A pressed");
                 rightPressed = true;
-                thisGame.player.handleAButtonPressed();
+                BensRPG.player.handleAButtonPressed();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("tag", "A released");
                 rightPressed = false;
+                BensRPG.player.handleAButtonReleased();
             }
         });
 
@@ -58,14 +62,17 @@ public class ActionButtons {
             // Note: these functions are only called once
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("tag", "B pressed");
                 leftPressed = true;
-                thisGame.player.handleBButtonPressed();
+                BensRPG.player.handleBButtonPressed();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("tag", "B released");
                 leftPressed = false;
+                BensRPG.player.handleBButtonReleased();
             }
         });
 
@@ -85,6 +92,8 @@ public class ActionButtons {
     public void setStage(Stage stage) {
         this.stage = stage;
 
+        /*
+        //todo: can this be removed???
         stage.addListener(new InputListener(){
 
             @Override
@@ -113,6 +122,7 @@ public class ActionButtons {
                 return true;
             }
         });
+        */
     }
     //public void draw(){
     //    stage.draw();

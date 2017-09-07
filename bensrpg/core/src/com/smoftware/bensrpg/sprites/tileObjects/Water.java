@@ -12,21 +12,18 @@ import com.smoftware.bensrpg.sprites.Hero;
 
 public class Water extends AbstractCollisionTileObject {
     BensRPG game;
-    Hero player;
 
-    public Water(BensRPG game, Map1Screen screen, Hero player, MapObject object) {
+    public Water(BensRPG game, Map1Screen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.WATER_BIT);
     }
 
-    public Water(BensRPG game, Map2Screen screen, Hero player, MapObject object) {
+    public Water(BensRPG game, Map2Screen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.WATER_BIT);

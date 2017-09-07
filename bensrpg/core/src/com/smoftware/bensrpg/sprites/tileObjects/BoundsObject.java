@@ -12,21 +12,18 @@ import com.smoftware.bensrpg.sprites.Hero;
 
 public class BoundsObject extends AbstractCollisionTileObject {
     BensRPG game;
-    Hero player;
 
-    public BoundsObject(BensRPG game, PlayScreen screen, Hero player, MapObject object) {
+    public BoundsObject(BensRPG game, PlayScreen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.BOUNDS_OBJECT_BIT);
     }
 
-    public BoundsObject(BensRPG game, ArmoryScreen screen, Hero player, MapObject object) {
+    public BoundsObject(BensRPG game, ArmoryScreen screen, MapObject object) {
         super(screen, object);
         this.game = game;
-        this.player = player;
 
         fixture.setUserData(this);
         setCategoryFilter(BensRPG.BOUNDS_OBJECT_BIT);

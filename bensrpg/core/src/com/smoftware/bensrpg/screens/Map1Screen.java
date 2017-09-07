@@ -77,9 +77,9 @@ public class Map1Screen extends AbstractScreen {
         for(MapObject object : map.getLayers().get("Interaction").getObjects().getByType(RectangleMapObject.class)){
             if (object != null) {
                 if (index++ == 0)
-                    signPost1 = new SignPost("Lorem ipsum dolor sit amet sign 1", game, this, game.player, object);
+                    signPost1 = new SignPost("Lorem ipsum dolor sit amet sign 1", game, this, object);
                 else
-                    signPost2 = new SignPost("Lorem ipsum dolor sit amet sign 2", game, this, game.player, object);
+                    signPost2 = new SignPost("Lorem ipsum dolor sit amet sign 2", game, this, object);
             }
         }
 
@@ -91,7 +91,7 @@ public class Map1Screen extends AbstractScreen {
 
         //create hero in our game world
         creator = new B2WorldCreator(game, this);
-        game.player.setScreen(this);
+        BensRPG.player.setScreen(this);
 
         world.setContactListener(new WorldContactListener());
     }
@@ -99,19 +99,20 @@ public class Map1Screen extends AbstractScreen {
     @Override
     public void show() {
         //Get player control back to this screen
-        game.player.setScreen(this);
+        //todo: uncomment
+        BensRPG.player.setScreen(this);
     }
 
     public void update(float dt){
         //takes 1 step in the physics simulation(60 times per second), velociy, position
         world.step(1 / 60f, 6, 2);
 
-        game.player.update(dt);
+        BensRPG.player.update(dt);
 
         //attach our gamecam to our players.x and y coordinates
-        if(game.player.currentState != Hero.State.DEAD) {
-            gamecam.position.x = game.player.b2body.getPosition().x;
-            gamecam.position.y = game.player.b2body.getPosition().y;
+        if(BensRPG.player.currentState != Hero.State.DEAD) {
+            gamecam.position.x = BensRPG.player.b2body.getPosition().x;
+            gamecam.position.y = BensRPG.player.b2body.getPosition().y;
         }
 
         //keep camera within map
@@ -147,7 +148,7 @@ public class Map1Screen extends AbstractScreen {
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        game.player.draw(game.batch);
+        BensRPG.player.draw(game.batch);
 
         if (showSignPost1) {
             signPost1.draw();

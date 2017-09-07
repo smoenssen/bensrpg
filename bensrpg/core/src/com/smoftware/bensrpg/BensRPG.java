@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.controllers.ActionButtons;
+import com.smoftware.bensrpg.controllers.FixedThumbpadController;
 import com.smoftware.bensrpg.controllers.FloatingThumbpadController;
 import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.sprites.Hero;
@@ -53,7 +54,8 @@ public class BensRPG extends Game {
 	player
 	 */
 
-	public Hero player;
+	public static Hero player;
+	public static GameState state;
 	public SpriteBatch batch;
 	private Stack screenStack;
 	private Screen currentScreen;
@@ -61,7 +63,7 @@ public class BensRPG extends Game {
 	private OrthographicCamera camera;
 	private Viewport viewport;
 	private Stage stage;
-	private FloatingThumbpadController touchpad;
+	private FixedThumbpadController touchpad;
 	private ActionButtons actionButtons;
 
 	/* WARNING Using AssetManager in a static way can cause issues, especially on Android.
@@ -74,6 +76,7 @@ public class BensRPG extends Game {
 		player = new Hero();
 		batch = new SpriteBatch();
 		screenStack = new Stack();
+		state = new GameState(); //todo: load state from file
 
 		// set width and height to fill screen
 		ASPECT_RATIO = (float)Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
@@ -90,7 +93,8 @@ public class BensRPG extends Game {
             //Create a Stage and controllers
             stage = new Stage(viewport, batch);
             actionButtons = new ActionButtons(this);
-            touchpad = new FloatingThumbpadController();
+			// todo: FloatingThumbpadController has an issue with being reset to 0 position if the A or B button are pressed
+            touchpad = new FixedThumbpadController();//FloatingThumbpadController();
             stage.addActor(touchpad.getTouchpad());
             stage.addActor(actionButtons.buttonTable);
             actionButtons.setStage(stage);
@@ -159,20 +163,27 @@ public class BensRPG extends Game {
 	}
 
 	public void handleInput(){
-		// This type of handling should only be used to see if button is being held down.
-		// For one shot button presses it is handled in the ActionButton listeners
+		/*
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			// For Android, this type of handling should only be used to see if button is being held down.
+			// For one shot button presses it is handled in the ActionButton listeners
 			if (actionButtons.isRightPressed()) {
-                Gdx.app.log("tag", "a pressed");
-                //player.handleAButtonPressed();
+                Gdx.app.log("tag", "A pressed");
             }
+            else {
+				Gdx.app.log("tag", "A released");
+			}
+
+			if (actionButtons.isLeftPressed()) {
+                Gdx.app.log("tag", "B pressed");
+                player.handleBButtonPressed();
+			}
 			else {
-				if (actionButtons.isLeftPressed())
-					Hero.handleBButtonPressed();
-				//else
-				//	Hero.handleBButtonReleased();
+				Gdx.app.log("tag", "B released");
+				player.handleBButtonReleased();
 			}
 		}
+		*/
 	}
 
 	@Override
@@ -184,6 +195,7 @@ public class BensRPG extends Game {
 		if (Gdx.app.getType() == Application.ApplicationType.Android) {
 			//Move player with Touchpad - velocity is directly proportional to the knob position
 			//player.b2body.setLinearVelocity(touchpad.getDirection());
+			//Gdx.app.log("tag", String.format("touchpad = %3.2f", touchpad.getDirection().x));
 			player.b2body.setLinearVelocity(touchpad.getDirection().x * Hero.velocityXFactor, touchpad.getDirection().y * Hero.velocityYFactor);
 		}
 

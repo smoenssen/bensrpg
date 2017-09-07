@@ -94,7 +94,7 @@ public class PlayScreen extends AbstractScreen {
 
         //create hero in our game world
         creator = new B2WorldCreator(game, this);
-        game.player.setScreen(this);
+        BensRPG.player.setScreen(this);
 
         world.setContactListener(new WorldContactListener());
     }
@@ -106,19 +106,19 @@ public class PlayScreen extends AbstractScreen {
     @Override
     public void show() {
         //Get player control back to this screen
-        game.player.setScreen(this);
+        BensRPG.player.setScreen(this);
     }
 
     public void update(float dt){
         //takes 1 step in the physics simulation(60 times per second), velociy, position
         world.step(1 / 60f, 6, 2);
 
-        game.player.update(dt);
+        BensRPG.player.update(dt);
 
         //attach our gamecam to our players.x and y coordinates
-        if(game.player.currentState != Hero.State.DEAD) {
-            gamecam.position.x = game.player.b2body.getPosition().x;
-            gamecam.position.y = game.player.b2body.getPosition().y;
+        if(BensRPG.player.currentState != Hero.State.DEAD) {
+            gamecam.position.x = BensRPG.player.b2body.getPosition().x;
+            gamecam.position.y = BensRPG.player.b2body.getPosition().y;
         }
 
         //keep camera within map
@@ -154,7 +154,7 @@ public class PlayScreen extends AbstractScreen {
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        game.player.draw(game.batch);
+        BensRPG.player.draw(game.batch);
 
         /*
         for (Enemy enemy : creator.getEnemies())

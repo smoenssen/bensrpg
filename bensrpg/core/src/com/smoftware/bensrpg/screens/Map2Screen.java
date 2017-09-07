@@ -48,7 +48,7 @@ public class Map2Screen extends AbstractScreen {
 
     //Interactive tiles
     private Switch mountainSwitch;
-    private boolean switchOn = false;
+    //private boolean switchOn = false;
 
     public Map2Screen(BensRPG game){
         this.game = game;
@@ -84,7 +84,11 @@ public class Map2Screen extends AbstractScreen {
 
         //create hero in our game world
         creator = new B2WorldCreator(game, this);
-        game.player.setScreen(this);
+        BensRPG.player.b2body.setTransform(16, 16, BensRPG.player.b2body.getAngle());
+        BensRPG.player.setScreen(this);
+
+        if (BensRPG.state.map2SwitchEnabled)
+            map.getLayers().get("Switch Press").setVisible((false));
 
         world.setContactListener(new WorldContactListener());
     }
@@ -92,19 +96,19 @@ public class Map2Screen extends AbstractScreen {
     @Override
     public void show() {
         //Get player control back to this screen
-        game.player.setScreen(this);
+        BensRPG.player.setScreen(this);
     }
 
     public void update(float dt){
         //takes 1 step in the physics simulation(60 times per second), velociy, position
         world.step(1 / 60f, 6, 2);
 
-        game.player.update(dt);
+        BensRPG.player.update(dt);
 
         //attach our gamecam to our players.x and y coordinates
-        if(game.player.currentState != Hero.State.DEAD) {
-            gamecam.position.x = game.player.b2body.getPosition().x;
-            gamecam.position.y = game.player.b2body.getPosition().y;
+        if(BensRPG.player.currentState != Hero.State.DEAD) {
+            gamecam.position.x = BensRPG.player.b2body.getPosition().x;
+            gamecam.position.y = BensRPG.player.b2body.getPosition().y;
         }
 
         //keep camera within map
@@ -140,7 +144,7 @@ public class Map2Screen extends AbstractScreen {
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        game.player.draw(game.batch);
+        BensRPG.player.draw(game.batch);
 
         game.batch.end();
     }
@@ -167,8 +171,8 @@ public class Map2Screen extends AbstractScreen {
         if (playerPosition.overlaps(mountainSwitch.getBounds())) {
             mountainSwitch.Interact(playerPosition);
 
-            if (!switchOn) {
-                switchOn = true;
+            if (!BensRPG.state.map2SwitchEnabled) {
+                BensRPG.state.map2SwitchEnabled = true;
                 for (ZeroOpacity object : creator.getZeroOpacityArray()) {
                     object.setCategoryFilter(BensRPG.NOTHING_BIT);
                 }
@@ -176,7 +180,7 @@ public class Map2Screen extends AbstractScreen {
                 map.getLayers().get("Switch Press").setVisible((false));
             }
             else {
-                switchOn = false;
+                BensRPG.state.map2SwitchEnabled = false;
                 for (ZeroOpacity object : creator.getZeroOpacityArray()) {
                     object.setCategoryFilter(BensRPG.ZERO_OPACITY);
                 }

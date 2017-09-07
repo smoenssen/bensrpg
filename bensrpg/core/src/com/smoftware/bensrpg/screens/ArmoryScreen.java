@@ -57,7 +57,7 @@ public class ArmoryScreen extends AbstractScreen {
         //atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
-        this.player = game.player;
+        this.player = BensRPG.player;
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
@@ -96,7 +96,7 @@ public class ArmoryScreen extends AbstractScreen {
 
         //create hero in our game world
         creator = new B2WorldCreator(game, this);
-        game.player.setScreen(this);
+        BensRPG.player.setScreen(this);
 
         world.setContactListener(new WorldContactListener());
     }
@@ -109,7 +109,7 @@ public class ArmoryScreen extends AbstractScreen {
     public void show() {
 
         //Get player control back to this screen
-        game.player.setScreen(this);
+        BensRPG.player.setScreen(this);
     }
 
     public void update(float dt){
