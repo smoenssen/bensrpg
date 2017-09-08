@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -37,8 +38,8 @@ public class BensRPG extends Game {
 	public static final short WATER_BIT = 64;
 	public static final short NEXT_MAP_BIT = 128;
 	public static final short PREV_MAP_BIT = 256;
-	public static final short ZERO_OPACITY = 512;
-	public static final short FIREBALL_BIT = 1024;
+	public static final short ZERO_OPACITY_BIT = 512;
+	public static final short BRIDGE_BIT = 1024;
 
 	/*
 	nothing
@@ -197,6 +198,7 @@ public class BensRPG extends Game {
 			//player.b2body.setLinearVelocity(touchpad.getDirection());
 			//Gdx.app.log("tag", String.format("touchpad = %3.2f", touchpad.getDirection().x));
 			player.b2body.setLinearVelocity(touchpad.getDirection().x * Hero.velocityXFactor, touchpad.getDirection().y * Hero.velocityYFactor);
+            player.setTouchPadPosition(new Vector2(touchpad.getDirection().x, touchpad.getDirection().y));
 		}
 
 		batch.begin();

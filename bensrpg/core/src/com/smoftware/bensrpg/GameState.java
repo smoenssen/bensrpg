@@ -5,5 +5,6 @@ package com.smoftware.bensrpg;
  */
 
 public class GameState {
+    public boolean map1WaterDisabled = true;
     public boolean map2SwitchEnabled = false;
 }

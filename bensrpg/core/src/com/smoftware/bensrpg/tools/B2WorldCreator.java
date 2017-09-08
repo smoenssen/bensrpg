@@ -14,6 +14,7 @@ import com.smoftware.bensrpg.sprites.Hero;
 import com.smoftware.bensrpg.sprites.tileObjects.ArmoryDoor;
 import com.smoftware.bensrpg.sprites.tileObjects.ArmoryDoorExit;
 import com.smoftware.bensrpg.sprites.tileObjects.BoundsObject;
+import com.smoftware.bensrpg.sprites.tileObjects.Bridge;
 import com.smoftware.bensrpg.sprites.tileObjects.GenericObject;
 import com.smoftware.bensrpg.sprites.tileObjects.Obstacle;
 import com.smoftware.bensrpg.sprites.tileObjects.ToMap1;
@@ -29,6 +30,7 @@ public class B2WorldCreator {
     //private Array<Goomba> goombas;
     //private Array<Turtle> turtles;
     private Array<Water> waterArrary;
+    private Array<Bridge> bridgeArray;
     private Array<ZeroOpacity> zeroOpacityArray;
 
     public B2WorldCreator(BensRPG game, PlayScreen screen){
@@ -75,6 +77,7 @@ public class B2WorldCreator {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         waterArrary = new Array<Water>();
+        bridgeArray = new Array<Bridge>();
 
          //create bodies/fixtures
         for(MapObject object : map.getLayers().get("Obstacles").getObjects().getByType(RectangleMapObject.class)){
@@ -89,7 +92,7 @@ public class B2WorldCreator {
 
         for(MapObject object : map.getLayers().get("Bridge Obstacle").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
-                new Obstacle(game, screen, object);
+                bridgeArray.add(new Bridge(game, screen, object));
         }
 
         for(MapObject object : map.getLayers().get("To Next Map").getObjects().getByType(RectangleMapObject.class)){
@@ -116,7 +119,7 @@ public class B2WorldCreator {
 
         for(MapObject object : map.getLayers().get("Bridge Obstacles").getObjects().getByType(RectangleMapObject.class)){
             if (object != null)
-                new Obstacle(game, screen, object);
+                bridgeArray.add(new Bridge(game, screen, object));
         }
 
         for(MapObject object : map.getLayers().get("To Previous Map").getObjects().getByType(RectangleMapObject.class)){
@@ -148,8 +151,30 @@ public class B2WorldCreator {
         }
     }
 
-    public Array<Water> getWaterArrary() {
-        return waterArrary;
+    public void disableWaterCollision(boolean disable) {
+        if (disable) {
+            for (Water object : waterArrary) {
+                object.setCollisionFilter(BensRPG.NOTHING_BIT);
+            }
+        }
+        else {
+            for (Water object : waterArrary) {
+                object.setCollisionFilter(BensRPG.WATER_BIT);
+            }
+        }
+    }
+
+    public void disableBridgeCollision(boolean disable) {
+        if (disable) {
+            for (Bridge object : bridgeArray) {
+                object.setCollisionFilter(BensRPG.NOTHING_BIT);
+            }
+        }
+        else {
+            for (Bridge object : bridgeArray) {
+                object.setCollisionFilter(BensRPG.WATER_BIT);
+            }
+        }
     }
 
     public Array<ZeroOpacity> getZeroOpacityArray() {

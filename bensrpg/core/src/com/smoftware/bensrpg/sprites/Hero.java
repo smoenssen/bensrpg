@@ -70,6 +70,7 @@ public class Hero extends Sprite implements InputProcessor{
     static float velocityY;
     public static float velocityXFactor;
     public static float velocityYFactor;
+    private Vector2 touchPadPosition;
 
     public Hero(){
         //initialize default values
@@ -439,10 +440,17 @@ public class Hero extends Sprite implements InputProcessor{
         //Gdx.app.log("tag", String.format("b2body X = %3.2f", b2body.getPosition().x));
 
         //update sprite with the correct frame depending on hero's current action
-        //if standing, then don't update
+        //if standing, then set to correct frame depending on previous state
         if (getState() != State.STANDING)
             setRegion(getFrame(dt));
-
+        else if (previousState == State.WALKING_DOWN)
+            setRegion(heroDownStanding);
+        else if (previousState == State.WALKING_UP)
+            setRegion(heroUpStanding);
+        else if (previousState == State.WALKING_RIGHT)
+            setRegion(heroRightStanding);
+        else if (previousState == State.WALKING_LEFT)
+            setRegion(heroLeftStanding);
     }
 
     public TextureRegion getFrame(float dt){
@@ -480,6 +488,7 @@ public class Hero extends Sprite implements InputProcessor{
 
         //update previous state
         previousState = currentState;
+
         //return our final adjusted frame
         return region;
 
@@ -488,16 +497,20 @@ public class Hero extends Sprite implements InputProcessor{
     public State getState(){
         //Gdx.app.log("tag", String.format("x = %3.2f, y = %3.2f", b2body.getLinearVelocity().x, b2body.getLinearVelocity().y));
 
-        if (b2body.getLinearVelocity().y > 0.6f)
+        if (b2body.getLinearVelocity().y != 0 && touchPadPosition.angle() > 36 && touchPadPosition.angle() <= 144)
             return State.WALKING_UP;
-        else if (b2body.getLinearVelocity().y < -0.6f)
-            return State.WALKING_DOWN;
-        else if (b2body.getLinearVelocity().x > 0)
-            return State.WALKING_RIGHT;
-        else if (b2body.getLinearVelocity().x < 0)
+        else if (b2body.getLinearVelocity().x != 0 && touchPadPosition.angle() > 144 && touchPadPosition.angle() <= 216)
             return State.WALKING_LEFT;
+        else if (b2body.getLinearVelocity().y != 0 && touchPadPosition.angle() > 216 && touchPadPosition.angle() <= 324)
+            return State.WALKING_DOWN;
+        else if (b2body.getLinearVelocity().x != 0 && (touchPadPosition.angle() > 324 || touchPadPosition.angle() <= 36))
+            return State.WALKING_RIGHT;
         else
             return State.STANDING;
+    }
+
+    public void setTouchPadPosition(Vector2 pos) {
+        touchPadPosition = pos;
     }
 
     public float getStateTimer(){
@@ -560,7 +573,8 @@ public class Hero extends Sprite implements InputProcessor{
                     BensRPG.PREV_MAP_BIT |
                     BensRPG.NEXT_MAP_BIT |
                     BensRPG.WATER_BIT |
-                    BensRPG.ZERO_OPACITY;
+                    BensRPG.ZERO_OPACITY_BIT |
+                    BensRPG.BRIDGE_BIT;
 
             fdef.shape = shape;
             fdef.restitution = 0.0f;

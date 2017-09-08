@@ -2,22 +2,31 @@ package com.smoftware.bensrpg.sprites.tileObjects;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.smoftware.bensrpg.BensRPG;
+import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.screens.Map2Screen;
 import com.smoftware.bensrpg.sprites.Hero;
 
 /**
- * Created by steve on 9/4/17.
+ * Created by moenssr on 9/8/2017.
  */
 
-public class ZeroOpacity extends AbstractCollisionTileObject {
+public class Bridge  extends AbstractCollisionTileObject {
     BensRPG game;
 
-    public ZeroOpacity(BensRPG game, Map2Screen screen, MapObject object) {
+    public Bridge(BensRPG game, Map1Screen screen, MapObject object) {
         super(screen, object);
         this.game = game;
 
         fixture.setUserData(this);
-        setCategoryFilter(BensRPG.ZERO_OPACITY_BIT);
+        setCategoryFilter(BensRPG.BRIDGE_BIT);
+    }
+
+    public Bridge(BensRPG game, Map2Screen screen, MapObject object) {
+        super(screen, object);
+        this.game = game;
+
+        fixture.setUserData(this);
+        setCategoryFilter(BensRPG.BRIDGE_BIT);
     }
 
     public void setCollisionFilter(short filter) {

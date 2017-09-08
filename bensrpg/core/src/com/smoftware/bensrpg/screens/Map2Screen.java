@@ -185,13 +185,17 @@ public class Map2Screen extends AbstractScreen {
     private void enableSwitch(boolean enable) {
         if (enable) {
             for (ZeroOpacity object : creator.getZeroOpacityArray()) {
-                object.setCategoryFilter(BensRPG.NOTHING_BIT);
+                object.setCollisionFilter(BensRPG.NOTHING_BIT);
             }
 
             map.getLayers().get("Switch Press").setVisible((false));
         }
         else {
+            for (ZeroOpacity object : creator.getZeroOpacityArray()) {
+                object.setCollisionFilter(BensRPG.ZERO_OPACITY_BIT);
+            }
 
+            map.getLayers().get("Switch Press").setVisible((true));
         }
     }
 

@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.BensRPG;
+import com.smoftware.bensrpg.GameState;
 import com.smoftware.bensrpg.sprites.Hero;
 import com.smoftware.bensrpg.sprites.tileObjects.SignPost;
 import com.smoftware.bensrpg.tools.B2WorldCreator;
@@ -92,6 +93,9 @@ public class Map1Screen extends AbstractScreen {
         //create hero in our game world
         creator = new B2WorldCreator(game, this);
         BensRPG.player.setScreen(this);
+
+        creator.disableWaterCollision(BensRPG.state.map1WaterDisabled);
+        creator.disableBridgeCollision(BensRPG.state.map1WaterDisabled);
 
         world.setContactListener(new WorldContactListener());
     }
