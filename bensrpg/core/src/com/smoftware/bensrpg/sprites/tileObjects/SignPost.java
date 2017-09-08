@@ -1,5 +1,6 @@
 package com.smoftware.bensrpg.sprites.tileObjects;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.utils.Align;
 import com.smoftware.bensrpg.BensRPG;
 import com.smoftware.bensrpg.screens.Map1Screen;
-import com.smoftware.bensrpg.sprites.Hero;
 
 /**
  * Created by steve on 9/3/17.
@@ -41,7 +41,12 @@ public class SignPost extends AbstractInteractiveTileObject{
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/9_px.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 24;
+
+        if (Gdx.app.getType() == Application.ApplicationType.Android)
+            parameter.size = 64;
+        else
+            parameter.size = 48;
+
         parameter.color = Color.DARK_GRAY;
         parameter.shadowColor = Color.LIGHT_GRAY;
         parameter.shadowOffsetX = 2;
@@ -65,11 +70,21 @@ public class SignPost extends AbstractInteractiveTileObject{
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/bensrpg_data/bensrpg.atlas")));
         skin.load(Gdx.files.internal("skin/bensrpg_data/bensrpg.json"));
 
+        float signHeight;
+        float padding;
         TextArea textArea = new TextArea(text, skin);
 
-        float padding = 32;
+        if (Gdx.app.getType() == Application.ApplicationType.Android)  {
+            signHeight = 180;
+            padding = 64;
+        }
+        else {
+            signHeight = 148;
+            padding = 48;
+        }
+
         float signWidth = Gdx.graphics.getWidth()- (padding * 2);
-        float signHeight = 95;
+
         textArea.setX(padding);
         //srm top of screen: textArea.setY(Gdx.graphics.getHeight() - padding - signHeight);
         textArea.setY(padding);

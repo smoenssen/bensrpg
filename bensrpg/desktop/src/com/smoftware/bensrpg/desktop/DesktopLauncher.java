@@ -6,7 +6,16 @@ import com.smoftware.bensrpg.BensRPG;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new BensRPG(), config);
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+
+		cfg.width = 1280;
+		cfg.height = 720;
+
+		// fullscreen
+		//cfg.fullscreen = true;
+		// vSync
+		//cfg.vSyncEnabled = true;
+
+		new LwjglApplication(new BensRPG(), cfg);
 	}
 }

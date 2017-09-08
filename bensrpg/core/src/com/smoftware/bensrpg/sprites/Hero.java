@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -82,9 +81,9 @@ public class Hero extends Sprite implements InputProcessor{
         lastPositionX = 176;
         lastPositionY = 14;
 
-        //TEST CODE//////////
-        lastPositionX = 620;
-        lastPositionY = 900;
+        //TEST CODE FOR END OF MAP 1//////////
+        //lastPositionX = 620;
+        //lastPositionY = 900;
         ///////////////////
 
         isDefined = false;
@@ -437,7 +436,7 @@ public class Hero extends Sprite implements InputProcessor{
 *//////////////////////////
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 
-        Gdx.app.log("tag", String.format("b2body X = %3.2f", b2body.getPosition().x));
+        //Gdx.app.log("tag", String.format("b2body X = %3.2f", b2body.getPosition().x));
 
         //update sprite with the correct frame depending on hero's current action
         //if standing, then don't update

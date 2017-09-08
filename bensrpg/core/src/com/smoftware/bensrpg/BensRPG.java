@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smoftware.bensrpg.controllers.ActionButtons;
 import com.smoftware.bensrpg.controllers.FixedThumbpadController;
-import com.smoftware.bensrpg.controllers.FloatingThumbpadController;
 import com.smoftware.bensrpg.screens.Map1Screen;
 import com.smoftware.bensrpg.sprites.Hero;
 
@@ -21,6 +20,7 @@ public class BensRPG extends Game {
 
 	public static final boolean bDebug = true;
 
+	// NOTE!!! SETTINGS FOR DESKTOP ARE IN THE DesktopLauncher
 	public static int V_WIDTH = 256;
 	public static int V_HEIGHT = 160;
 	public static float ASPECT_RATIO = (float)V_WIDTH/(float)V_HEIGHT;

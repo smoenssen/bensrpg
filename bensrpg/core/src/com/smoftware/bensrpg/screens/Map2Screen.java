@@ -87,8 +87,7 @@ public class Map2Screen extends AbstractScreen {
         BensRPG.player.b2body.setTransform(16, 16, BensRPG.player.b2body.getAngle());
         BensRPG.player.setScreen(this);
 
-        if (BensRPG.state.map2SwitchEnabled)
-            map.getLayers().get("Switch Press").setVisible((false));
+        enableSwitch(BensRPG.state.map2SwitchEnabled);
 
         world.setContactListener(new WorldContactListener());
     }
@@ -173,20 +172,25 @@ public class Map2Screen extends AbstractScreen {
 
             if (!BensRPG.state.map2SwitchEnabled) {
                 BensRPG.state.map2SwitchEnabled = true;
-                for (ZeroOpacity object : creator.getZeroOpacityArray()) {
-                    object.setCategoryFilter(BensRPG.NOTHING_BIT);
-                }
-
-                map.getLayers().get("Switch Press").setVisible((false));
             }
             else {
                 BensRPG.state.map2SwitchEnabled = false;
-                for (ZeroOpacity object : creator.getZeroOpacityArray()) {
-                    object.setCategoryFilter(BensRPG.ZERO_OPACITY);
-                }
-
-                map.getLayers().get("Switch Press").setVisible((true));
             }
+
+            enableSwitch(BensRPG.state.map2SwitchEnabled);
+
+        }
+    }
+
+    private void enableSwitch(boolean enable) {
+        if (enable) {
+            for (ZeroOpacity object : creator.getZeroOpacityArray()) {
+                object.setCategoryFilter(BensRPG.NOTHING_BIT);
+            }
+
+            map.getLayers().get("Switch Press").setVisible((false));
+        }
+        else {
 
         }
     }

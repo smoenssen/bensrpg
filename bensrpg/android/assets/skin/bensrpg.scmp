@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/check-off.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/check-off.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -16,7 +16,7 @@ atlasData: {
 			name: check-off
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/check-on.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/check-on.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -29,7 +29,7 @@ atlasData: {
 			name: check-on
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/cursor.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/cursor.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -42,7 +42,7 @@ atlasData: {
 			name: cursor
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -55,7 +55,7 @@ atlasData: {
 			name: default
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-pane.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-pane.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -68,7 +68,7 @@ atlasData: {
 			name: default-pane
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-rect-pad.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-rect-pad.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -81,7 +81,7 @@ atlasData: {
 			name: default-rect-pad
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-pane-noborder.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-pane-noborder.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -94,7 +94,7 @@ atlasData: {
 			name: default-pane-noborder
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-rect.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-rect.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -107,7 +107,7 @@ atlasData: {
 			name: default-rect
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-rect-down.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-rect-down.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -120,7 +120,7 @@ atlasData: {
 			name: default-rect-down
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-round.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-round.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -133,7 +133,7 @@ atlasData: {
 			name: default-round
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-round-down.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-round-down.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -146,7 +146,7 @@ atlasData: {
 			name: default-round-down
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-round-large.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-round-large.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -159,7 +159,7 @@ atlasData: {
 			name: default-round-large
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-scroll.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-scroll.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -172,7 +172,7 @@ atlasData: {
 			name: default-scroll
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-select.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-select.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -185,7 +185,7 @@ atlasData: {
 			name: default-select
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-select-selection.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-select-selection.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -198,7 +198,7 @@ atlasData: {
 			name: default-select-selection
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-slider.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-slider.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -211,7 +211,7 @@ atlasData: {
 			name: default-slider
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-slider-knob.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-slider-knob.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -224,7 +224,7 @@ atlasData: {
 			name: default-slider-knob
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-splitpane.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-splitpane.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -237,7 +237,7 @@ atlasData: {
 			name: default-splitpane
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-splitpane-vertical.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-splitpane-vertical.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -250,7 +250,7 @@ atlasData: {
 			name: default-splitpane-vertical
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default-window.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default-window.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -263,7 +263,7 @@ atlasData: {
 			name: default-window
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/selection.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/selection.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -276,7 +276,7 @@ atlasData: {
 			name: selection
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/tree-minus.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/tree-minus.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -289,7 +289,7 @@ atlasData: {
 			name: tree-minus
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/tree-plus.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/tree-plus.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -302,7 +302,7 @@ atlasData: {
 			name: tree-plus
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/white.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/white.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -333,7 +333,7 @@ atlasData: {
 			name: dialogDim
 		}
 		{
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/default/raw/test2.9.png"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/default/raw/test2.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -394,7 +394,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: default-font
-			file: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg_data/default.fnt"
+			file: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg_data/default.fnt"
 		}
 	]
 	classStyleMap: {
@@ -2166,5 +2166,5 @@ preferences: {
 		value: false
 	}
 }
-saveFile: "/home/steve/AndroidStudioProjects/bensrpg/android/assets/skin/bensrpg.scmp"
+saveFile: "/home/steve/AndroidStudioProjects/bensrpg/bensrpg/android/assets/skin/bensrpg.scmp"
 }
