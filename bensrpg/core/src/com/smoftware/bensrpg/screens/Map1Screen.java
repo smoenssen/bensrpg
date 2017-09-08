@@ -4,8 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -21,6 +25,7 @@ import com.smoftware.bensrpg.GameState;
 import com.smoftware.bensrpg.sprites.Hero;
 import com.smoftware.bensrpg.sprites.tileObjects.SignPost;
 import com.smoftware.bensrpg.tools.B2WorldCreator;
+import com.smoftware.bensrpg.tools.OrthogonalTiledMapRendererWithSprites;
 import com.smoftware.bensrpg.tools.WorldContactListener;
 
 /**
@@ -37,7 +42,9 @@ public class Map1Screen extends AbstractScreen {
     //Tiled map variables
     private TmxMapLoader maploader;
     private TiledMap map;
-    private OrthogonalTiledMapRenderer mapRenderer;
+    private OrthogonalTiledMapRendererWithSprites mapRenderer;
+    private MapLayer spriteLayer;
+    TextureRegion textureRegion;
 
     //Box2d variables
     private World world;
@@ -56,7 +63,7 @@ public class Map1Screen extends AbstractScreen {
     public Map1Screen(BensRPG game){
         this.game = game;
 
-        //create cam used to follow mario through cam world
+        //create cam used to follow hero through cam world
         gamecam = new OrthographicCamera();
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
@@ -65,7 +72,17 @@ public class Map1Screen extends AbstractScreen {
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
         map = maploader.load("RPGGame/maps/Map_1.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 1  / BensRPG.PPM);
+        mapRenderer = new OrthogonalTiledMapRendererWithSprites(map, 1  / BensRPG.PPM, game.batch);
+
+        Texture texture = new Texture(Gdx.files.internal("sprites/Character_1.png"));
+        textureRegion = new TextureRegion(texture, 0, 0, 16, 16);
+
+        spriteLayer = map.getLayers().get("Player");
+
+        TextureMapObject tmo = new TextureMapObject(textureRegion);
+        tmo.setX(100);
+        tmo.setY(100);
+        spriteLayer.getObjects().add(tmo);
 
         //set map dimensions
         setMapPixelDimensions(map);
@@ -94,6 +111,7 @@ public class Map1Screen extends AbstractScreen {
         creator = new B2WorldCreator(game, this);
         BensRPG.player.setScreen(this);
 
+        //game states
         creator.disableWaterCollision(BensRPG.state.map1WaterDisabled);
         creator.disableBridgeCollision(BensRPG.state.map1WaterDisabled);
 
@@ -142,6 +160,12 @@ public class Map1Screen extends AbstractScreen {
         //Clear the game screen with Black
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        /////test code
+       // gamecam.update();
+       // mapRenderer.setView(gamecam);
+       // mapRenderer.render();
+        /////
 
         //render our game map
         mapRenderer.render();
